@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; font-src 'self' https: fonts.gstatic.com fonts.googleapis.com; img-src 'self' data: https: images.unsplash.com; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; script-src 'self' 'unsafe-inline' https: cdn.jsdelivr.net cdnjs.cloudflare.com;">
+    <title>解决方案 - 太一科技</title>
+    <meta name="description" content="太一科技解决方案 - AI智能戒指在各行业的创新应用场景">
+    <meta name="keywords" content="AI解决方案,情感计算,医疗,教育,企业,太一科技">
+    <!-- TailwindCSS -->
+    <link rel="stylesheet" href="dist/output.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress"></div>
+    
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- 顶部用户栏 -->
+    <div class="fixed w-full z-50 bg-black/60 backdrop-blur-sm border-b border-gray-800/30">
+        <div class="container mx-auto px-6 py-0.5">
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-3 text-gray-400 hidden-mobile hidden md:flex">
+                    <span><i class="fas fa-phone mr-1"></i>021-6688-8888</span>
+                    <span><i class="fas fa-envelope mr-1"></i>contact@taiyi-tech.com</span>
+                </div>
+                <div class="flex items-center space-x-3 md:ml-auto">
+                    <!-- 未登录状态 -->
+                    <div id="userNotLoggedIn" class="flex items-center space-x-3">
+                        <a href="login.html" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i>登录
+                        </a>
+                        <a href="register.html" class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white text-xs hover:from-blue-600 hover:to-purple-700 transition-all">
+                            注册
+                        </a>
+                    </div>
+                    <!-- 已登录状态 -->
+                    <div id="userLoggedIn" class="hidden items-center space-x-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-300 text-xs" id="userName">用户名</span>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-gray-300 hover:text-blue-400 transition-colors">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 top-full mt-2 w-40 bg-gray-800 border border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="profile.html" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-user mr-2"></i>个人中心
+                                </a>
+                                <a href="orders.html" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-shopping-cart mr-2"></i>我的订单
+                                </a>
+                                <!-- <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-heart mr-2"></i>收藏夹
+                                </a> -->
+                                <hr class="border-gray-700 my-1">
+                                <a href="#" id="logoutBtn" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>退出登录
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="fixed w-full z-40 bg-black/80 backdrop-blur-xl border-b border-gray-800/50 transition-all duration-300" style="top: 24px;">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        太一科技
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#about" class="nav-link relative group">
+                        <span>关于我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="products.html" class="nav-link relative group">
+                        <span>产品服务</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="solutions.html" class="nav-link relative group">
+                        <span>解决方案</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <!-- <a href="#future" class="nav-link relative group">
+                        <span>发展前景</span>
+                        <span class="nav-underline"></span>
+                    </a> -->
+                    <a href="hardware.html" class="nav-link relative group">
+                        <span>智能硬件</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="contact.html" class="nav-link relative group">
+                        <span>联系我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                </div>
+                <div class="lg:hidden">
+                    <button class="mobile-menu-btn text-white hover:text-blue-400 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu hidden lg:hidden bg-black/95 backdrop-blur-xl border-t border-gray-800">
+            <div class="container mx-auto px-6 py-6">
+                <div class="flex flex-col space-y-4">
+                    <a href="#about" class="text-white hover:text-blue-400 transition-colors py-2">关于我们</a>
+                    <a href="products.html" class="text-white hover:text-blue-400 transition-colors py-2">产品服务</a>
+                    <a href="solutions.html" class="text-white hover:text-blue-400 transition-colors py-2">解决方案</a>
+                    <a href="#future" class="text-white hover:text-blue-400 transition-colors py-2">发展前景</a>
+                    <a href="hardware.html" class="text-white hover:text-blue-400 transition-colors py-2">智能硬件</a>
+                    <a href="contact.html" class="text-white hover:text-blue-400 transition-colors py-2">联系我们</a>
+                    <hr class="border-gray-700 my-2">
+                    <div id="mobileUserMenu">
+                        <!-- 移动端用户菜单将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题区域 -->
+    <section class="py-32 bg-gradient-to-b from-gray-900 via-black to-gray-900 relative" style="padding-top: 120px;">
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="fade-in mb-8">
+                <span class="section-badge">Industry Solutions</span>
+                <h1 class="section-title">
+                    解决<span class="text-gradient">方案</span>
+                </h1>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                    AI智能戒指在各行业的创新应用场景，为不同领域提供定制化的情感计算解决方案
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 行业解决方案 -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6 text-black">行业应用领域</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    基于AI智能戒指的情感识别技术，为各行业提供专业的解决方案
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 医疗健康 -->
+                <div class="apple-scenario-card">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" 
+                         alt="教育培训应用" 
+                         class="w-full h-48 object-cover rounded-xl mb-6">
+                    <h3 class="text-xl font-bold mb-3 text-black">医疗健康</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        实时监测患者情绪状态，辅助心理治疗，提供个性化健康建议和预警服务
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-1 mb-6">
+                        <li>• 情绪状态监测</li>
+                        <li>• 心理健康评估</li>
+                        <li>• 压力预警提醒</li>
+                        <li>• 康复进度跟踪</li>
+                    </ul>
+                    <div class="pt-4 border-t border-gray-200">
+                        <h4 class="font-semibold text-black mb-2">应用场景</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">医院病房</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">康复中心</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">心理诊所</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 企业办公 -->
+                <div class="apple-scenario-card">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" 
+                         alt="企业办公应用" 
+                         class="w-full h-48 object-cover rounded-xl mb-6">
+                    <h3 class="text-xl font-bold mb-3 text-black">企业办公</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        优化员工工作状态，提升团队协作效率，建立健康的企业文化环境
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-1 mb-6">
+                        <li>• 工作压力管理</li>
+                        <li>• 团队情绪分析</li>
+                        <li>• 效率优化建议</li>
+                        <li>• 员工关怀系统</li>
+                    </ul>
+                    <div class="pt-4 border-t border-gray-200">
+                        <h4 class="font-semibold text-black mb-2">应用场景</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">开放办公</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">会议室</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">客服中心</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 教育培训 -->
+                <div class="apple-scenario-card">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" 
+                         alt="教育培训应用" 
+                         class="w-full h-48 object-cover rounded-xl mb-6">
+                    <h3 class="text-xl font-bold mb-3 text-black">教育培训</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        个性化学习体验，情感状态分析，帮助学生保持最佳学习状态
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-1 mb-6">
+                        <li>• 学习状态监测</li>
+                        <li>• 专注力分析</li>
+                        <li>• 个性化指导</li>
+                        <li>• 学习效果评估</li>
+                    </ul>
+                    <div class="pt-4 border-t border-gray-200">
+                        <h4 class="font-semibold text-black mb-2">应用场景</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">智慧教室</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">在线教育</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">培训机构</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 详细解决方案 -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6 text-black">解决方案详情</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    深入了解我们为每个行业定制的专业解决方案
+                </p>
+            </div>
+
+            <!-- 医疗健康详细方案 -->
+            <div class="mb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <h3 class="text-3xl font-bold mb-6 text-black">医疗健康解决方案</h3>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            通过AI智能戒指实时监测患者的生理和心理状态，为医护人员提供全面的患者情感数据，优化治疗方案，提升医疗服务质量。
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-heartbeat text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">实时健康监测</h4>
+                                    <p class="text-gray-600">24小时连续监测心率、血氧、压力等生理指标，及时发现异常情况</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-brain text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">情感状态分析</h4>
+                                    <p class="text-gray-600">AI算法分析患者情绪变化，为心理治疗提供数据支持</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-bell text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">智能预警系统</h4>
+                                    <p class="text-gray-600">当检测到异常时自动向医护人员发送预警信息</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" 
+                             alt="医疗健康解决方案" 
+                             class="w-full h-auto rounded-3xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 企业办公详细方案 -->
+            <div class="mb-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in order-2 lg:order-1">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80" 
+                             alt="企业办公解决方案" 
+                             class="w-full h-auto rounded-3xl shadow-2xl">
+                    </div>
+                    <div class="fade-in order-1 lg:order-2">
+                        <h3 class="text-3xl font-bold mb-6 text-black">企业办公解决方案</h3>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            帮助企业建立情感感知的工作环境，通过实时监测员工状态，优化工作安排，提升团队协作效率和员工满意度。
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-chart-bar text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">员工状态分析</h4>
+                                    <p class="text-gray-600">实时分析员工工作状态，识别疲劳、压力等情况</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-users text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">团队效率优化</h4>
+                                    <p class="text-gray-600">基于团队情感数据，提供工作安排和协作建议</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-shield-alt text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">员工关怀体系</h4>
+                                    <p class="text-gray-600">建立智能化的员工关怀和心理健康支持系统</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教育培训详细方案 -->
+            <div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <h3 class="text-3xl font-bold mb-6 text-black">教育培训解决方案</h3>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            为教育机构提供个性化的学习体验，通过情感状态监测优化教学策略，提升学习效果和学生参与度。
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-graduation-cap text-teal-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">学习状态监测</h4>
+                                    <p class="text-gray-600">实时监测学生专注度、兴趣度等学习状态指标</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-lightbulb text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">个性化教学</h4>
+                                    <p class="text-gray-600">根据学生情感状态调整教学节奏和内容难度</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-award text-pink-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-black mb-2">学习效果评估</h4>
+                                    <p class="text-gray-600">通过情感数据分析学习效果，优化教学质量</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" 
+                             alt="教育培训解决方案" 
+                             class="w-full h-auto rounded-3xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术优势 -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6 text-black">技术优势</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    领先的情感计算技术，为各行业解决方案提供强大的技术支撑
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-microchip text-3xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-black">AI芯片技术</h4>
+                    <p class="text-gray-600 leading-relaxed">自研T1情感计算芯片，高精度情感识别算法</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-database text-3xl text-purple-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-black">大数据分析</h4>
+                    <p class="text-gray-600 leading-relaxed">海量情感数据训练，持续优化算法精度</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-cloud text-3xl text-green-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-black">云端部署</h4>
+                    <p class="text-gray-600 leading-relaxed">支持私有云和公有云部署，数据安全可控</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-cogs text-3xl text-yellow-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3 text-black">定制开发</h4>
+                    <p class="text-gray-600 leading-relaxed">支持行业定制化开发，灵活适配业务需求</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成功案例 -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6 text-black">成功案例</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    真实案例见证我们解决方案的实际效果和价值
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="apple-scenario-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-hospital text-2xl text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-black">上海某三甲医院</h4>
+                                <p class="text-gray-500">重症监护室情感监测项目</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            为重症监护室患者部署AI智能戒指，实时监测患者心理状态，辅助医护人员制定更精准的治疗方案。
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600">30%</div>
+                                <div class="text-sm text-gray-600">患者满意度提升</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">25%</div>
+                                <div class="text-sm text-gray-600">医护效率提升</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                            <strong>项目周期：</strong> 6个月 | <strong>覆盖床位：</strong> 120床
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="apple-scenario-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-building text-2xl text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-black">某500强科技企业</h4>
+                                <p class="text-gray-500">员工压力监测与关怀系统</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            为企业员工配备智能戒指，建立全方位的员工关怀体系，优化工作环境，提升团队协作效率。
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600">20%</div>
+                                <div class="text-sm text-gray-600">离职率降低</div>
+                            </div>
+                            <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                                <div class="text-2xl font-bold text-yellow-600">28%</div>
+                                <div class="text-sm text-gray-600">工作效率提升</div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                            <strong>项目周期：</strong> 12个月 | <strong>覆盖员工：</strong> 2000人
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系咨询 -->
+    <section class="py-24 bg-gradient-to-b from-gray-900 to-black relative">
+        <div class="container mx-auto px-6 text-center">
+            <div class="fade-in mb-12">
+                <h2 class="text-4xl font-bold mb-6 text-white">定制您的专属解决方案</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    我们的专家团队将根据您的具体需求，为您量身定制最适合的情感AI解决方案
+                </p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="contact.html" class="hero-btn-apple-primary px-8 py-4">
+                    <span class="text-lg font-semibold">
+                        <i class="fas fa-comments mr-2"></i>
+                        专家咨询
+                    </span>
+                </a>
+                <a href="products.html" class="hero-btn-apple-secondary px-8 py-4">
+                    <span class="text-lg font-semibold">
+                        <i class="fas fa-cog mr-2"></i>
+                        查看服务
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-20 bg-gradient-to-b from-gray-900 to-black border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                        <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            太一科技
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-8 leading-relaxed max-w-md">
+                        致力于通过技术创新让AI从"高性能的工具"升级为"有情感的伙伴"，构建更有温度的智能世界。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weibo"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#about" class="footer-link">关于我们</a></li>
+                        <li><a href="products.html" class="footer-link">产品服务</a></li>
+                        <li><a href="solutions.html" class="footer-link">解决方案</a></li>
+                        <li><a href="hardware.html" class="footer-link">智能硬件</a></li>
+                        <li><a href="contact.html" class="footer-link">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">联系方式</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i>
+                            上海市普陀区
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-blue-400"></i>
+                            021-6688-8888
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-blue-400"></i>
+                            contact@taiyi-tech.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">
+                    © 2025 上海太一智枢科技发展有限公司. All rights reserved.
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">隐私政策</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">服务条款</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">法律声明</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+</body>
+</html> 

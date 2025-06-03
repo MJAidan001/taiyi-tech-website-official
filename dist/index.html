@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; font-src 'self' https: fonts.gstatic.com fonts.googleapis.com; img-src 'self' data: https: images.unsplash.com; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; script-src 'self' 'unsafe-inline' https: cdn.jsdelivr.net cdnjs.cloudflare.com;">
+    <title>太一科技 - 情感化AI智能体领导者</title>
+    <meta name="description" content="上海太一智枢科技发展有限公司 - 专注情感化AI智能体开发，让AI更懂人心">
+    <meta name="keywords" content="AI智能体,情感计算,人工智能,机器学习,深度学习,上海太一科技">
+    <!-- TailwindCSS -->
+    <link rel="stylesheet" href="dist/output.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress"></div>
+    
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- 顶部用户栏 -->
+    <div class="fixed w-full z-50 bg-black/60 backdrop-blur-sm border-b border-gray-800/30">
+        <div class="container mx-auto px-6 py-0.5">
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-3 text-gray-400 hidden-mobile hidden md:flex">
+                    <span><i class="fas fa-phone mr-1"></i>021-6688-8888</span>
+                    <span><i class="fas fa-envelope mr-1"></i>contact@taiyi-tech.com</span>
+                </div>
+                <div class="flex items-center space-x-3 md:ml-auto">
+                    <!-- 未登录状态 -->
+                    <div id="userNotLoggedIn" class="flex items-center space-x-3">
+                        <a href="login.html" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i>登录
+                        </a>
+                        <a href="register.html" class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white text-xs hover:from-blue-600 hover:to-purple-700 transition-all">
+                            注册
+                        </a>
+                    </div>
+                    <!-- 已登录状态 -->
+                    <div id="userLoggedIn" class="hidden items-center space-x-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-300 text-xs" id="userName">用户名</span>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-gray-300 hover:text-blue-400 transition-colors">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 top-full mt-2 w-40 bg-gray-800 border border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="profile.html" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-user mr-2"></i>个人中心
+                                </a>
+                                <a href="orders.html" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-shopping-cart mr-2"></i>我的订单
+                                </a>
+                                <!-- <a href="#" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-heart mr-2"></i>收藏夹
+                                </a> -->
+                                <hr class="border-gray-700 my-1">
+                                <a href="#" id="logoutBtn" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-700 transition-colors text-xs">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>退出登录
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="fixed w-full z-40 bg-black/80 backdrop-blur-xl border-b border-gray-800/50 transition-all duration-300" style="top: 24px;">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        太一科技
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#about" class="nav-link relative group">
+                        <span>关于我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="products.html" class="nav-link relative group">
+                        <span>产品服务</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="solutions.html" class="nav-link relative group">
+                        <span>解决方案</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <!-- <a href="#future" class="nav-link relative group">
+                        <span>发展前景</span>
+                        <span class="nav-underline"></span>
+                    </a> -->
+                    <a href="hardware.html" class="nav-link relative group">
+                        <span>智能硬件</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="contact.html" class="nav-link relative group">
+                        <span>联系我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                </div>
+                <div class="lg:hidden">
+                    <button class="mobile-menu-btn text-white hover:text-blue-400 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu hidden lg:hidden bg-black/95 backdrop-blur-xl border-t border-gray-800">
+            <div class="container mx-auto px-6 py-6">
+                <div class="flex flex-col space-y-4">
+                    <a href="#about" class="text-white hover:text-blue-400 transition-colors py-2">关于我们</a>
+                    <a href="products.html" class="text-white hover:text-blue-400 transition-colors py-2">产品服务</a>
+                    <a href="solutions.html" class="text-white hover:text-blue-400 transition-colors py-2">解决方案</a>
+                    <a href="#future" class="text-white hover:text-blue-400 transition-colors py-2">发展前景</a>
+                    <a href="hardware.html" class="text-white hover:text-blue-400 transition-colors py-2">智能硬件</a>
+                    <a href="contact.html" class="text-white hover:text-blue-400 transition-colors py-2">联系我们</a>
+                    <hr class="border-gray-700 my-2">
+                    <div id="mobileUserMenu">
+                        <!-- 移动端用户菜单将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero-section min-h-screen flex items-center justify-center relative overflow-hidden" style="padding-top: 130px;">
+        <!-- 简洁背景 -->
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900"></div>
+        
+        <!-- 增强粒子效果 -->
+        <div class="particles-enhanced">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <!-- 产品发布标签 -->
+            <div class="fade-in mb-6">
+                <span class="inline-block px-8 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full text-blue-300 text-lg font-semibold tracking-wider mb-6">
+                    全新发布
+                </span>
+            </div>
+
+            <!-- 主标题 - 苹果风格 -->
+            <div class="fade-in mb-8">
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
+                    <span class="text-white">
+                        AI 智能戒指
+                    </span>
+                </h1>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-300 mb-6">
+                    健康，触手可及
+                </h2>
+                <p class="text-xl md:text-2xl text-blue-400 font-medium mb-3">
+                    Emotional AI at Your Fingertips
+                </p>
+                <p class="text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                    全球首款健康AI监测智能戒指，AI芯片加持，7x24小时健康监测，让科技更懂你的心
+                </p>
+            </div>
+
+            <!-- 产品图片展示区 - 增大更时尚 -->
+            <div class="fade-in mb-12">
+                <div class="hero-product-image">
+                    <!-- 产品光晕效果 -->
+                    <div class="product-glow-enhanced"></div>
+                    
+                    <!-- 主产品图 -->
+                    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80" 
+                         alt="太一AI智能戒指" 
+                         class="w-full h-auto object-contain"
+                         loading="eager">
+                    
+                    <!-- 产品特性标签 - 优化样式 -->
+                    <div class="product-feature-tag">
+                        <i class="fas fa-brain mr-2"></i>
+                        健康AI芯片
+                    </div>
+                    <div class="product-feature-tag">
+                        <i class="fas fa-battery-full mr-2"></i>
+                        7天续航
+                    </div>
+                    <div class="product-feature-tag">
+                        <i class="fas fa-tint mr-2"></i>
+                        防水等级IPX8
+                    </div>
+                </div>
+            </div>
+
+            <!-- 价格和购买按钮 -->
+            <div class="fade-in mb-12">
+                <div class="mb-6">
+                    <div class="text-4xl font-bold text-white mb-2">¥2,999</div>
+                    <div class="text-base text-gray-400">
+                        预购享早鸟价 ¥2,599
+                        <span class="ml-3 text-green-400 font-semibold">立省 ¥400</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center hero-button-container">
+                    <a href="checkout.html" class="hero-btn-apple-primary px-12 py-4 text-lg font-semibold transition-all duration-300 flex items-center justify-center btn-buy-now">
+                        <i class="fas fa-shopping-cart mr-3"></i>
+                        <span>立即购买</span>
+                    </a>
+                    <a href="products.html" class="hero-btn-apple-secondary px-12 py-4 text-lg font-semibold transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-info-circle mr-3"></i>
+                        <span>了解更多</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 产品核心特性 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+                <div class="apple-feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-brain text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">健康AI识别</h3>
+                    <p class="text-gray-400 text-sm">实时监测心率变异性，AI算法分析健康状态，提供个性化健康建议</p>
+                </div>
+                
+                <div class="apple-feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-heart text-2xl text-red-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">健康监测</h3>
+                    <p class="text-gray-400 text-sm">24小时心率监测，睡眠质量分析，压力水平评估，守护您的健康</p>
+                </div>
+                
+                <div class="apple-feature-card">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-mobile-alt text-2xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">智能连接</h3>
+                    <p class="text-gray-400 text-sm">无缝连接手机，智能提醒，语音交互，让AI成为您的贴心伙伴</p>
+                </div>
+            </div>
+
+            <!-- 发布倒计时或预购信息
+            <div class="fade-in">
+                <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm border border-blue-500/20 rounded-3xl p-6 max-w-3xl mx-auto">
+                    <h3 class="text-xl font-bold text-white mb-3">抢先体验计划</h3>
+                    <p class="text-gray-300 mb-4 text-sm">成为首批用户，享受专属权益和终身技术支持</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+                        <div class="bg-black/30 rounded-xl p-3">
+                            <div class="text-lg font-bold text-blue-400">500+</div>
+                            <div class="text-xs text-gray-400">预购用户</div>
+                        </div>
+                        <div class="bg-black/30 rounded-xl p-3">
+                            <div class="text-lg font-bold text-green-400">95%</div>
+                            <div class="text-xs text-gray-400">满意度</div>
+                        </div>
+                        <div class="bg-black/30 rounded-xl p-3">
+                            <div class="text-lg font-bold text-purple-400">7天</div>
+                            <div class="text-xs text-gray-400">超长续航</div>
+                        </div>
+                        <div class="bg-black/30 rounded-xl p-3">
+                            <div class="text-lg font-bold text-yellow-400">IPX8</div>
+                            <div class="text-xs text-gray-400">防水等级</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+
+
+ 
+
+    <!-- 核心业务 -->
+    <section id="products" class="py-32 bg-gray-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-5"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 fade-in">
+                <span class="section-badge">Our Services</span>
+                <h2 class="section-title">
+                    核心<span class="text-gradient">业务</span>
+                </h2>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                    专注于情感化AI技术，为不同行业提供创新解决方案
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="service-card group fade-in">
+                    <div class="service-icon-wrapper">
+                        <!-- <div class="service-icon bg-gradient-to-r from-blue-500 to-blue-600">
+                            <i class="fas fa-brain text-2xl text-white"></i>
+                        </div> -->
+                        <div class="service-icon-bg bg-blue-500/20"></div>
+                    </div>
+                    <div class="service-image mb-6">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" 
+                             alt="情感化AI智能体" 
+                             class="w-full h-48 object-cover rounded-lg"
+                             loading="lazy">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white group-hover:text-blue-400 transition-colors">情感化AI智能体</h3>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        基于开源大模型框架，结合自研情感计算算法，实现多模态情感交互，让AI真正理解和回应人类情感。
+                    </p>
+                    <div class="service-features mb-8">
+                        <div class="feature-item">
+                            <i class="fas fa-check text-blue-400 mr-2"></i>
+                            <span>多模态情感识别</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-blue-400 mr-2"></i>
+                            <span>个性化对话引擎</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-blue-400 mr-2"></i>
+                            <span>实时情感分析</span>
+                        </div>
+                    </div>
+            
+                </div>
+                
+                <div class="service-card group fade-in delay-100">
+                    <div class="service-icon-wrapper">
+                        <!-- <div class="service-icon bg-gradient-to-r from-purple-500 to-purple-600">
+                            <i class="fas fa-industry text-2xl text-white"></i>
+                        </div> -->
+                        <div class="service-icon-bg bg-purple-500/20"></div>
+                    </div>
+                    <div class="service-image mb-6">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" 
+                             alt="行业解决方案" 
+                             class="w-full h-48 object-cover rounded-lg"
+                             loading="lazy">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white group-hover:text-purple-400 transition-colors">行业解决方案</h3>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        为教育、医疗、咨询等领域提供定制化AI解决方案，赋能行业数字化转型，提升服务质量和效率。
+                    </p>
+                    <div class="service-features mb-8">
+                        <div class="feature-item">
+                            <i class="fas fa-check text-purple-400 mr-2"></i>
+                            <span>定制化开发服务</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-purple-400 mr-2"></i>
+                            <span>行业专家团队</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-purple-400 mr-2"></i>
+                            <span>端到端解决方案</span>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="service-card group fade-in delay-200">
+                    <div class="service-icon-wrapper">
+                        <!-- <div class="service-icon bg-gradient-to-r from-green-500 to-green-600">
+                            <i class="fas fa-network-wired text-2xl text-white"></i>
+                        </div> -->
+                        <div class="service-icon-bg bg-green-500/20"></div>
+                    </div>
+                    <div class="service-image mb-6">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80" 
+                             alt="生态共建" 
+                             class="w-full h-48 object-cover rounded-lg"
+                             loading="lazy">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white group-hover:text-green-400 transition-colors">生态共建</h3>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        构建开放平台，推动情感化AI生态发展，与合作伙伴共创智能未来，实现技术共享与创新。
+                    </p>
+                    <div class="service-features mb-8">
+                        <div class="feature-item">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>开放API平台</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>技术社区支持</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            <span>合作伙伴计划</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 发展前景
+    <section id="future" class="py-32 bg-gradient-to-b from-gray-900 to-gray-800 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 fade-in">
+                <span class="section-badge">Future Outlook</span>
+                <h2 class="section-title">
+                    发展<span class="text-gradient">前景</span>
+                </h2>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                    情感计算市场正在快速增长，我们与您一起把握未来
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="fade-in">
+                    <div class="chart-container">
+                        <canvas id="marketChart" class="w-full h-80"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-8 fade-in">
+                    <div class="market-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line text-3xl text-blue-400"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="text-4xl font-bold text-blue-400 mb-2">686.86亿</h3>
+                            <p class="text-gray-300 text-lg">2030年情感计算市场规模（美元）</p>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up text-green-400 mr-2"></i>
+                                <span class="text-green-400">持续增长</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-trending-up text-3xl text-purple-400"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="text-4xl font-bold text-purple-400 mb-2">37.42%</h3>
+                            <p class="text-gray-300 text-lg">2024-2030年复合年增长率</p>
+                            <div class="stat-trend">
+                                <i class="fas fa-rocket text-purple-400 mr-2"></i>
+                                <span class="text-purple-400">快速发展</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-globe text-3xl text-green-400"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="text-4xl font-bold text-green-400 mb-2">全球布局</h3>
+                            <p class="text-gray-300 text-lg">覆盖教育、医疗、咨询等多个领域</p>
+                            <div class="stat-trend">
+                                <i class="fas fa-expand-arrows-alt text-green-400 mr-2"></i>
+                                <span class="text-green-400">全面覆盖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- 公司概况 -->
+    <section id="about" class="py-32 bg-gradient-to-b from-black via-gray-900 to-gray-800 relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-5"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="fade-in">
+                    <div class="mb-8">
+                        <span class="section-badge">About Us</span>
+                        <h2 class="section-title">
+                            让AI<span class="text-gradient">拥有情感</span>
+                        </h2>
+                        <div class="section-divider"></div>
+                    </div>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed font-light">
+                        上海太一智枢科技发展有限公司是一家以情感化AI智能体开发为核心使命的人工智能科技企业，致力于通过技术创新让AI从"高性能的工具"升级为"有情感的伙伴"。
+                    </p>
+                    <p class="text-lg text-gray-400 mb-12 leading-relaxed">
+                        我们相信，真正的AI革命不仅在于计算能力的提升，更在于让机器理解人类的情感世界。通过深度学习、自然语言处理和情感计算技术，我们正在构建一个更有温度的智能世界。
+                    </p>
+                    <!-- <div class="grid grid-cols-2 gap-8">
+                        <div class="achievement-card bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+                            <div class="achievement-icon bg-gradient-to-r from-blue-500 to-blue-600">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2 text-blue-400">2025</h3>
+                            <p class="text-gray-400 text-sm">成立年份</p>
+                            <div class="achievement-glow bg-blue-500/20"></div>
+                        </div>
+                        <div class="achievement-card bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
+                            <div class="achievement-icon bg-gradient-to-r from-purple-500 to-purple-600">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2 text-purple-400">上海</h3>
+                            <p class="text-gray-400 text-sm">总部位置</p>
+                            <div class="achievement-glow bg-purple-500/20"></div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="relative fade-in">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                        <div class="relative bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50">
+                            <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=800&q=80" 
+                                 alt="AI Technology Workspace" 
+                                 class="rounded-2xl object-cover w-full h-96 shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                                 loading="lazy">
+                            <div class="absolute inset-8 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-2xl"></div>
+                            <div class="absolute bottom-12 left-12 text-white">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></div>
+                                    <span class="text-green-400 font-semibold">正在运行</span>
+                                </div>
+                                <h4 class="text-2xl font-bold mb-2">AI情感计算中心</h4>
+                                <p class="text-gray-300">24/7 情感分析处理</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 装饰元素 -->
+                    <!-- <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div> -->
+                    <!-- <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl"></div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 页脚 -->
+    <div class="mt-20 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-black/95 to-gray-800/90 rounded-3xl"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10 rounded-3xl"></div>
+        
+        <!-- 动态光效 -->
+        <div class="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-48 h-48 bg-gradient-to-r from-green-500/20 to-teal-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 p-8 md:p-12 rounded-3xl border border-gray-700/50 backdrop-blur-sm">
+            <!-- 标题区域 -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm rounded-full px-6 py-3 border border-blue-500/30 mb-6">
+                    <div class="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
+                    <span class="text-blue-300 font-semibold text-sm tracking-wider uppercase">Market Outlook</span>
+                    <div class="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse"></div>
+                </div>
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    市场<span class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">前景</span>
+                </h3>
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+                    情感计算市场正在快速增长，我们与您一起把握未来机遇
+                </p>
+            </div>
+            
+            <!-- 数据展示 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 复合增长率 -->
+                <div class="relative">
+                    <div class="market-stat-card bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/20 backdrop-blur-sm rounded-2xl p-4 h-full">
+                        <!-- 图标 -->
+                        <div class="mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-chart-line text-white text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- 数据 -->
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-blue-400 mb-2 leading-none">37.42%</div>
+                            <h4 class="text-base font-semibold text-white mb-2">复合年增长率</h4>
+                            <p class="text-gray-400 text-xs mt-2">2024-2030年预期增长</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 市场规模 -->
+                <div class="relative">
+                    <div class="market-stat-card bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 backdrop-blur-sm rounded-2xl p-4 h-full">
+                        <!-- 图标 -->
+                        <div class="mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-globe-americas text-white text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- 数据 -->
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-purple-400 mb-2 leading-none">686.86亿</div>
+                            <h4 class="text-base font-semibold text-white mb-2">市场规模</h4>
+                            <p class="text-gray-400 text-xs">2030年预期规模（美元）</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 疗愈市场 -->
+                <div class="relative">
+                    <div class="market-stat-card bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 backdrop-blur-sm rounded-2xl p-4 h-full">
+                        <!-- 图标 -->
+                        <div class="mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-heart text-white text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- 数据 -->
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-emerald-400 mb-2 leading-none">8.47万亿</div>
+                            <h4 class="text-base font-semibold text-white mb-2">疗愈市场</h4>
+                            <p class="text-gray-400 text-xs">2027年全球市场（美元）</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部说明 -->
+            <!-- <div class="mt-12 text-center">
+                <div class="inline-flex items-center space-x-2 text-gray-400 text-sm">
+                    <i class="fas fa-info-circle"></i>
+                    <span>数据来源：行业研究报告及市场分析预测</span>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    
+    <footer class="py-20 bg-gradient-to-b from-gray-900 to-black border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                        <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            太一科技
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-8 leading-relaxed max-w-md">
+                        致力于通过技术创新让AI从"高性能的工具"升级为"有情感的伙伴"，构建更有温度的智能世界。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weibo"></i>
+                        </a>
+                        <!-- <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a> -->
+                        <!-- <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a> -->
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="footer-link">关于我们</a></li>
+                        <li><a href="#products" class="footer-link">产品服务</a></li>
+                        <li><a href="#solutions" class="footer-link">解决方案</a></li>
+                        <li><a href="#shop" class="footer-link">智能硬件</a></li>
+                        <li><a href="#contact" class="footer-link">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">联系方式</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i>
+                            上海市普陀区
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-blue-400"></i>
+                            021-6688-8888
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-blue-400"></i>
+                            contact@taiyi-tech.com
+                        </li>
+                    </ul>
+                    
+                    <!-- 订阅区域 -->
+                    <!-- <div class="mt-8">
+                        <h5 class="text-lg font-semibold mb-4 text-white">订阅资讯</h5>
+                        <form class="newsletter-form">
+                            <div class="flex">
+                                <input type="email" placeholder="输入邮箱" class="newsletter-input">
+                                <button type="submit" class="newsletter-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">
+                    © 2025 上海太一智枢科技发展有限公司. All rights reserved.
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">隐私政策</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">服务条款</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">法律声明</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

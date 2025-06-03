@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的订单 - 太一科技</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    太一科技
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-blue-400 transition-all duration-300">首页</a>
+                    <a href="products.html" class="hover:text-blue-400 transition-all duration-300">产品商城</a>
+                    <a href="profile.html" class="hover:text-blue-400 transition-all duration-300">个人中心</a>
+                    <a href="index.html#contact" class="hover:text-blue-400 transition-all duration-300">联系我们</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-300 text-sm">欢迎，<span id="currentUserName">用户</span></span>
+                    <button id="logoutBtn" class="text-red-400 hover:text-red-300 transition-colors">
+                        <i class="fas fa-sign-out-alt mr-1"></i>退出
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 面包屑导航 -->
+    <div class="pt-24 pb-4 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <nav class="flex items-center space-x-2 text-sm text-gray-400">
+                <a href="index.html" class="hover:text-blue-400 transition-colors">首页</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-white">我的订单</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 我的订单主内容 -->
+    <section class="py-16 bg-gradient-to-b from-gray-900 via-black to-gray-900 relative">
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <!-- 页面标题 -->
+            <div class="text-center mb-12 fade-in">
+                <h1 class="text-4xl font-bold text-white mb-4">我的订单</h1>
+                <p class="text-gray-400">查看您的订单历史和状态</p>
+            </div>
+
+            <!-- 订单筛选标签 -->
+            <div class="flex justify-center mb-8 fade-in">
+                <div class="inline-flex bg-gray-800/50 backdrop-blur-sm rounded-full p-2 space-x-2">
+                    <button class="order-filter-btn active" data-status="all">
+                        <i class="fas fa-list mr-2"></i>
+                        <span>全部订单</span>
+                    </button>
+                    <button class="order-filter-btn" data-status="pending">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>待付款</span>
+                    </button>
+                    <button class="order-filter-btn" data-status="paid">
+                        <i class="fas fa-credit-card mr-2"></i>
+                        <span>已付款</span>
+                    </button>
+                    <button class="order-filter-btn" data-status="shipped">
+                        <i class="fas fa-truck mr-2"></i>
+                        <span>已发货</span>
+                    </button>
+                    <button class="order-filter-btn" data-status="completed">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>已完成</span>
+                    </button>
+                    <button class="order-filter-btn" data-status="cancelled">
+                        <i class="fas fa-times-circle mr-2"></i>
+                        <span>已取消</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 订单列表 -->
+            <div class="max-w-5xl mx-auto space-y-6" id="ordersList">
+                
+                <!-- 最新订单 - 已完成 -->
+                <div class="order-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 fade-in" data-status="completed">
+                    <div class="p-6">
+                        <!-- 订单头部 -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-2">
+                                    <span class="font-mono text-blue-400 font-bold">TY202501260001</span>
+                                    <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold border border-green-500/30">
+                                        <i class="fas fa-check-circle mr-1"></i>已完成
+                                    </span>
+                                </div>
+                                <p class="text-gray-400 text-sm">下单时间：2025-01-26 14:30:25</p>
+                            </div>
+                            <div class="text-right mt-4 md:mt-0">
+                                <div class="text-2xl font-bold text-red-500">¥9.00</div>
+                                <p class="text-gray-400 text-sm">实付金额</p>
+                            </div>
+                        </div>
+
+                        <!-- 商品信息 -->
+                        <div class="border border-gray-600 rounded-lg p-4 mb-6">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=80&q=80" 
+                                     alt="本源核" class="w-16 h-16 object-cover rounded-lg bg-white p-1">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-white mb-1">本源核</h3>
+                                    <p class="text-gray-400 text-sm mb-1">UTON 声音传感器</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-300">
+                                        <span>颜色：蓝色</span>
+                                        <span>数量：1</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-white">¥12.00</div>
+                                    <div class="text-sm text-gray-400">优惠：-¥3.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 物流信息 -->
+                        <div class="bg-gray-700/30 rounded-lg p-4 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1 flex items-center">
+                                        <i class="fas fa-truck mr-2 text-green-400"></i>
+                                        顺丰速运
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">运单号：SF1234567890</p>
+                                </div>
+                                <button class="text-blue-400 hover:text-blue-300 transition-colors text-sm">
+                                    <i class="fas fa-external-link-alt mr-1"></i>
+                                    查看物流
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 订单操作 -->
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-redo mr-1"></i>再次购买
+                            </button>
+                            <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-star mr-1"></i>评价商品
+                            </button>
+                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-headset mr-1"></i>联系客服
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 已发货订单 -->
+                <div class="order-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 fade-in" data-status="shipped">
+                    <div class="p-6">
+                        <!-- 订单头部 -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-2">
+                                    <span class="font-mono text-blue-400 font-bold">TY202501250002</span>
+                                    <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm font-semibold border border-blue-500/30">
+                                        <i class="fas fa-truck mr-1"></i>已发货
+                                    </span>
+                                </div>
+                                <p class="text-gray-400 text-sm">下单时间：2025-01-25 16:20:15</p>
+                            </div>
+                            <div class="text-right mt-4 md:mt-0">
+                                <div class="text-2xl font-bold text-red-500">¥1,599.00</div>
+                                <p class="text-gray-400 text-sm">实付金额</p>
+                            </div>
+                        </div>
+
+                        <!-- 商品信息 -->
+                        <div class="border border-gray-600 rounded-lg p-4 mb-6">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=80&q=80" 
+                                     alt="太一智能手环Pro" class="w-16 h-16 object-cover rounded-lg bg-white p-1">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-white mb-1">太一智能手环Pro</h3>
+                                    <p class="text-gray-400 text-sm mb-1">全天候情感状态监测</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-300">
+                                        <span>颜色：黑色</span>
+                                        <span>数量：1</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-white">¥1,599.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 物流进度 -->
+                        <div class="bg-gray-700/30 rounded-lg p-4 mb-6">
+                            <h4 class="font-semibold text-white mb-3 flex items-center">
+                                <i class="fas fa-route mr-2 text-blue-400"></i>
+                                物流跟踪
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full mt-1"></div>
+                                    <div>
+                                        <p class="text-white text-sm">运输中</p>
+                                        <p class="text-gray-400 text-xs">快件已从上海分拣中心发出</p>
+                                        <p class="text-gray-500 text-xs">2025-01-26 08:30</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-gray-500 rounded-full mt-1"></div>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">已发货</p>
+                                        <p class="text-gray-500 text-xs">商品已从太一科技仓库发出</p>
+                                        <p class="text-gray-500 text-xs">2025-01-25 18:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 订单操作 -->
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-truck mr-1"></i>查看物流
+                            </button>
+                            <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-check mr-1"></i>确认收货
+                            </button>
+                            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-headset mr-1"></i>联系客服
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 已付款订单 -->
+                <div class="order-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 fade-in" data-status="paid">
+                    <div class="p-6">
+                        <!-- 订单头部 -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-2">
+                                    <span class="font-mono text-blue-400 font-bold">TY202501240003</span>
+                                    <span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-sm font-semibold border border-yellow-500/30">
+                                        <i class="fas fa-credit-card mr-1"></i>已付款
+                                    </span>
+                                </div>
+                                <p class="text-gray-400 text-sm">下单时间：2025-01-24 10:15:30</p>
+                            </div>
+                            <div class="text-right mt-4 md:mt-0">
+                                <div class="text-2xl font-bold text-red-500">¥4,999.00</div>
+                                <p class="text-gray-400 text-sm">实付金额</p>
+                            </div>
+                        </div>
+
+                        <!-- 商品信息 -->
+                        <div class="border border-gray-600 rounded-lg p-4 mb-6">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=80&q=80" 
+                                     alt="太一智能手表X1" class="w-16 h-16 object-cover rounded-lg bg-white p-1">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-white mb-1">太一智能手表X1</h3>
+                                    <p class="text-gray-400 text-sm mb-1">旗舰级情感计算芯片</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-300">
+                                        <span>颜色：银色</span>
+                                        <span>数量：1</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-white">¥4,999.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 备货状态 -->
+                        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mb-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-box text-yellow-400 mr-3"></i>
+                                <div>
+                                    <p class="text-yellow-400 font-semibold">商品备货中</p>
+                                    <p class="text-gray-400 text-sm">预计今日发货，请耐心等待</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 订单操作 -->
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-headset mr-1"></i>联系客服
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 待付款订单 -->
+                <div class="order-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 fade-in" data-status="pending">
+                    <div class="p-6">
+                        <!-- 订单头部 -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-2">
+                                    <span class="font-mono text-blue-400 font-bold">TY202501230004</span>
+                                    <span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm font-semibold border border-orange-500/30">
+                                        <i class="fas fa-clock mr-1"></i>待付款
+                                    </span>
+                                </div>
+                                <p class="text-gray-400 text-sm">下单时间：2025-01-23 15:45:12</p>
+                            </div>
+                            <div class="text-right mt-4 md:mt-0">
+                                <div class="text-2xl font-bold text-red-500">¥1,293.00</div>
+                                <p class="text-gray-400 text-sm">待付金额</p>
+                            </div>
+                        </div>
+
+                        <!-- 商品信息 -->
+                        <div class="border border-gray-600 rounded-lg p-4 mb-6">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=80&q=80" 
+                                     alt="太一智能耳机S3" class="w-16 h-16 object-cover rounded-lg bg-white p-1">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-white mb-1">太一智能耳机S3</h3>
+                                    <p class="text-gray-400 text-sm mb-1">AI情感音频技术</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-300">
+                                        <span>颜色：白色</span>
+                                        <span>数量：1</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-white">¥1,299.00</div>
+                                    <div class="text-sm text-gray-400">优惠：-¥6.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 付款倒计时 -->
+                        <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-red-400 font-semibold">请尽快完成付款</p>
+                                    <p class="text-gray-400 text-sm">订单将在剩余时间结束后自动取消</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-red-400 font-bold text-lg" id="countdown">23:45:12</div>
+                                    <p class="text-gray-400 text-xs">剩余时间</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 订单操作 -->
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-6 py-2 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white rounded-lg transition-all duration-300 text-sm font-semibold">
+                                <i class="fas fa-credit-card mr-1"></i>立即付款
+                            </button>
+                            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-times mr-1"></i>取消订单
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 已取消订单 -->
+                <div class="order-card bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 fade-in" data-status="cancelled">
+                    <div class="p-6">
+                        <!-- 订单头部 -->
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                            <div>
+                                <div class="flex items-center space-x-4 mb-2">
+                                    <span class="font-mono text-blue-400 font-bold">TY202501220005</span>
+                                    <span class="bg-gray-500/20 text-gray-400 px-3 py-1 rounded-full text-sm font-semibold border border-gray-500/30">
+                                        <i class="fas fa-times-circle mr-1"></i>已取消
+                                    </span>
+                                </div>
+                                <p class="text-gray-400 text-sm">下单时间：2025-01-22 12:30:45</p>
+                                <p class="text-gray-500 text-sm">取消时间：2025-01-22 14:15:30</p>
+                            </div>
+                            <div class="text-right mt-4 md:mt-0">
+                                <div class="text-2xl font-bold text-gray-500">¥3,599.00</div>
+                                <p class="text-gray-500 text-sm">订单金额</p>
+                            </div>
+                        </div>
+
+                        <!-- 商品信息 -->
+                        <div class="border border-gray-600 rounded-lg p-4 mb-6 opacity-60">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=80&q=80" 
+                                     alt="太一智能项链" class="w-16 h-16 object-cover rounded-lg bg-white p-1 grayscale">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-400 mb-1">太一智能项链</h3>
+                                    <p class="text-gray-500 text-sm mb-1">隐藏式传感器设计</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>颜色：玫瑰金</span>
+                                        <span>数量：1</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-gray-500">¥3,599.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 取消原因 -->
+                        <div class="bg-gray-700/30 rounded-lg p-4 mb-6">
+                            <p class="text-gray-400 text-sm">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                取消原因：超时未付款，系统自动取消
+                            </p>
+                        </div>
+
+                        <!-- 订单操作 -->
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                                <i class="fas fa-redo mr-1"></i>重新下单
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 空状态 -->
+            <div id="emptyState" class="text-center py-20 hidden">
+                <div class="w-32 h-32 bg-gray-700/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shopping-cart text-6xl text-gray-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-400 mb-4">暂无订单</h3>
+                <p class="text-gray-500 mb-8">您还没有任何订单，快去选购心仪的商品吧！</p>
+                <a href="products.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl transition-all duration-300">
+                    <i class="fas fa-shopping-bag mr-2"></i>
+                    去购物
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-16 bg-gradient-to-b from-gray-900 to-black border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    太一科技
+                </div>
+                <p class="text-gray-400 mb-6">
+                    致力于通过技术创新让AI从"高性能的工具"升级为"有情感的伙伴"。
+                </p>
+                <p class="text-gray-400">
+                    © 2025 上海太一智枢科技发展有限公司. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+    <script>
+        // 我的订单页面专用脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查登录状态
+            if (!isUserLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            initOrdersPage();
+        });
+
+        function initOrdersPage() {
+            // 加载用户信息
+            loadUserInfo();
+            
+            // 初始化订单筛选
+            initOrderFilters();
+            
+            // 初始化倒计时
+            initCountdown();
+            
+            // 初始化退出登录
+            initLogout();
+            
+            // 初始化订单按钮功能
+            initOrderButtons();
+        }
+
+        // 加载用户信息
+        function loadUserInfo() {
+            const userName = getCurrentUserName();
+            const userEmail = localStorage.getItem('userEmail') || '123@qq.com';
+            
+            document.getElementById('currentUserName').textContent = userName;
+            
+            // 如果需要在页面其他地方显示用户邮箱，可以在这里添加
+        }
+
+        // 初始化订单筛选
+        function initOrderFilters() {
+            const filterBtns = document.querySelectorAll('.order-filter-btn');
+            const orderCards = document.querySelectorAll('.order-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const status = this.dataset.status;
+                    
+                    // 更新按钮状态
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 筛选订单
+                    let visibleCount = 0;
+                    orderCards.forEach(card => {
+                        if (status === 'all' || card.dataset.status === status) {
+                            card.style.display = 'block';
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                                card.style.transition = 'all 0.3s ease';
+                            }, visibleCount * 100);
+                            
+                            visibleCount++;
+                        } else {
+                            card.style.transition = 'all 0.3s ease';
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(-20px)';
+                            
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                    
+                    // 显示/隐藏空状态
+                    const emptyState = document.getElementById('emptyState');
+                    if (visibleCount === 0) {
+                        emptyState.classList.remove('hidden');
+                    } else {
+                        emptyState.classList.add('hidden');
+                    }
+                });
+            });
+        }
+
+        // 初始化倒计时
+        function initCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            if (!countdownElement) return;
+            
+            let timeLeft = 24 * 60 * 60 - 15 * 60 - 48; // 23:45:12
+            
+            const updateCountdown = () => {
+                if (timeLeft <= 0) {
+                    countdownElement.textContent = '00:00:00';
+                    countdownElement.parentElement.parentElement.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-3"></i>
+                            <div>
+                                <p class="text-red-400 font-semibold">订单已超时</p>
+                                <p class="text-gray-400 text-sm">订单已自动取消</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                
+                countdownElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                timeLeft--;
+            };
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // 初始化退出登录
+        function initLogout() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (typeof handleLogout === 'function') {
+                        handleLogout(e);
+                    }
+                });
+            }
+        }
+
+        // 初始化订单按钮功能
+        function initOrderButtons() {
+            // 为所有订单卡片绑定按钮事件
+            const orderCards = document.querySelectorAll('.order-card');
+            
+            orderCards.forEach(card => {
+                const orderId = card.querySelector('.font-mono').textContent;
+                const orderStatus = card.dataset.status;
+                
+                // 立即付款按钮
+                const payButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('立即付款') || btn.querySelector('i.fa-credit-card'));
+                payButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handlePayment(orderId));
+                });
+                
+                // 取消订单按钮
+                const cancelButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('取消订单') || btn.querySelector('i.fa-times'));
+                cancelButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleCancelOrder(orderId, card));
+                });
+                
+                // 确认收货按钮
+                const confirmButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('确认收货') || btn.querySelector('i.fa-check'));
+                confirmButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleConfirmReceipt(orderId, card));
+                });
+                
+                // 查看物流按钮
+                const trackingButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('查看物流') || btn.querySelector('i.fa-truck') || btn.querySelector('i.fa-external-link-alt'));
+                trackingButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleViewTracking(orderId));
+                });
+                
+                // 再次购买按钮
+                const repurchaseButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('再次购买') || btn.querySelector('i.fa-redo'));
+                repurchaseButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleRepurchase(orderId, card));
+                });
+                
+                // 评价商品按钮
+                const reviewButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('评价商品') || btn.querySelector('i.fa-star'));
+                reviewButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleReview(orderId, card));
+                });
+                
+                // 联系客服按钮
+                const customerServiceButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('联系客服') || btn.querySelector('i.fa-headset'));
+                customerServiceButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleCustomerService(orderId));
+                });
+                
+                // 重新下单按钮（已取消订单）
+                const reorderButtons = Array.from(card.querySelectorAll('button')).filter(btn => 
+                    btn.textContent.includes('重新下单'));
+                reorderButtons.forEach(btn => {
+                    btn.addEventListener('click', () => handleReorder(orderId, card));
+                });
+            });
+        }
+
+        // 处理付款
+        function handlePayment(orderId) {
+            // 获取对应的订单卡片
+            const orderCard = Array.from(document.querySelectorAll('.order-card')).find(card => 
+                card.querySelector('.font-mono').textContent === orderId
+            );
+            
+            if (!orderCard) {
+                if (typeof showNotification === 'function') {
+                    showNotification('订单信息错误', 'error');
+                }
+                return;
+            }
+            
+            // 获取商品信息
+            const productName = orderCard.querySelector('h3').textContent;
+            const productImage = orderCard.querySelector('img').src;
+            const priceElement = orderCard.querySelector('.text-2xl.font-bold.text-red-500');
+            const productPrice = priceElement ? parseFloat(priceElement.textContent.replace('¥', '').replace(',', '')) : 12.00;
+            
+            // 获取商品规格信息
+            const colorElement = orderCard.querySelector('span:contains("颜色")') || 
+                                Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('颜色'));
+            const quantityElement = orderCard.querySelector('span:contains("数量")') || 
+                                  Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('数量'));
+            
+            const color = colorElement ? colorElement.textContent.replace('颜色：', '') : '默认';
+            const quantity = quantityElement ? parseInt(quantityElement.textContent.replace('数量：', '')) : 1;
+            
+            if (confirm('确认支付订单 ' + orderId + ' 吗？')) {
+                // 显示加载状态
+                if (typeof showNotification === 'function') {
+                    showNotification('正在跳转到支付页面...', 'info');
+                }
+                
+                // 构建跳转URL，携带商品信息和订单信息
+                const checkoutParams = new URLSearchParams({
+                    name: productName,
+                    price: productPrice,
+                    quantity: quantity,
+                    color: color,
+                    image: productImage,
+                    source: 'payment',
+                    orderId: orderId,
+                    mode: 'payment' // 标识这是付款模式
+                });
+                
+                // 跳转到结算页面（付款模式）
+                setTimeout(() => {
+                    window.location.href = `checkout.html?${checkoutParams.toString()}`;
+                }, 1500);
+            }
+        }
+
+        // 处理取消订单
+        function handleCancelOrder(orderId, orderCard) {
+            if (confirm('确定要取消订单 ' + orderId + ' 吗？\n取消后无法恢复。')) {
+                // 显示处理中状态
+                if (typeof showNotification === 'function') {
+                    showNotification('正在取消订单...', 'info');
+                }
+                
+                setTimeout(() => {
+                    // 更新订单状态为已取消
+                    updateOrderStatus(orderId, 'cancelled');
+                    
+                    // 更新订单卡片显示
+                    updateOrderCardToCancelled(orderCard, orderId);
+                    
+                    if (typeof showNotification === 'function') {
+                        showNotification('订单已成功取消', 'success');
+                    }
+                }, 1000);
+            }
+        }
+
+        // 处理确认收货
+        function handleConfirmReceipt(orderId, orderCard) {
+            if (confirm('确认已收到商品吗？\n确认后订单将完成，无法撤销。')) {
+                if (typeof showNotification === 'function') {
+                    showNotification('正在确认收货...', 'info');
+                }
+                
+                setTimeout(() => {
+                    // 更新订单状态为已完成
+                    updateOrderStatus(orderId, 'completed');
+                    
+                    // 更新订单卡片显示
+                    updateOrderCardToCompleted(orderCard, orderId);
+                    
+                    if (typeof showNotification === 'function') {
+                        showNotification('收货确认成功！订单已完成', 'success');
+                    }
+                }, 1000);
+            }
+        }
+
+        // 处理查看物流
+        function handleViewTracking(orderId) {
+            // 创建物流跟踪模态框
+            showTrackingModal(orderId);
+        }
+
+        // 显示物流跟踪模态框
+        function showTrackingModal(orderId) {
+            // 创建模态框
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center';
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl p-8 w-full max-w-lg mx-4 border border-gray-700">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-white">物流跟踪 - ${orderId}</h3>
+                        <button class="close-modal text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-blue-400 font-semibold">顺丰速运</span>
+                                <span class="text-gray-400 text-sm">SF1234567890</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full mt-1 animate-pulse"></div>
+                                    <div>
+                                        <p class="text-white text-sm font-semibold">运输中</p>
+                                        <p class="text-gray-400 text-xs">快件已从上海分拣中心发出，正在运输途中</p>
+                                        <p class="text-gray-500 text-xs">2025-01-26 08:30:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full mt-1"></div>
+                                    <div>
+                                        <p class="text-white text-sm">已发货</p>
+                                        <p class="text-gray-400 text-xs">商品已从太一科技仓库发出</p>
+                                        <p class="text-gray-500 text-xs">2025-01-25 18:00:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-gray-500 rounded-full mt-1"></div>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">已接单</p>
+                                        <p class="text-gray-500 text-xs">快递员已接单，准备取件</p>
+                                        <p class="text-gray-500 text-xs">2025-01-25 17:30:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-3 h-3 bg-gray-500 rounded-full mt-1"></div>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">订单确认</p>
+                                        <p class="text-gray-500 text-xs">您的订单已确认，商品准备出库</p>
+                                        <p class="text-gray-500 text-xs">2025-01-25 16:20:15</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-700/30 rounded-lg p-4">
+                            <h4 class="text-white font-semibold mb-2">预计送达</h4>
+                            <p class="text-blue-400 font-bold">明天 14:00 - 18:00</p>
+                            <p class="text-gray-400 text-sm">如有变化会及时通知您</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6">
+                        <button class="close-modal px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-xl transition-all duration-300">
+                            关闭
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 绑定关闭事件
+            modal.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        // 处理再次购买
+        function handleRepurchase(orderId, orderCard) {
+            // 获取商品信息
+            const productName = orderCard.querySelector('h3').textContent;
+            const productImage = orderCard.querySelector('img').src;
+            const priceElement = orderCard.querySelector('.text-lg.font-bold.text-white');
+            const productPrice = priceElement ? parseFloat(priceElement.textContent.replace('¥', '').replace(',', '')) : 12.00;
+            
+            // 获取商品规格信息
+            const colorElement = orderCard.querySelector('span:contains("颜色")') || 
+                                Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('颜色'));
+            const quantityElement = orderCard.querySelector('span:contains("数量")') || 
+                                  Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('数量'));
+            
+            const color = colorElement ? colorElement.textContent.replace('颜色：', '') : '默认';
+            const quantity = quantityElement ? parseInt(quantityElement.textContent.replace('数量：', '')) : 1;
+            
+            if (typeof showNotification === 'function') {
+                showNotification('正在跳转到结算页面...', 'info');
+            }
+            
+            // 构建跳转URL，携带商品信息
+            const checkoutParams = new URLSearchParams({
+                name: productName,
+                price: productPrice,
+                quantity: quantity,
+                color: color,
+                image: productImage,
+                source: 'repurchase',
+                orderId: orderId
+            });
+            
+            // 跳转到结算页面
+            setTimeout(() => {
+                window.location.href = `checkout.html?${checkoutParams.toString()}`;
+            }, 1000);
+        }
+
+        // 处理商品评价
+        function handleReview(orderId, orderCard) {
+            const productName = orderCard.querySelector('h3').textContent;
+            showReviewModal(orderId, productName);
+        }
+
+        // 显示评价模态框
+        function showReviewModal(orderId, productName) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center';
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl p-8 w-full max-w-md mx-4 border border-gray-700">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-white">评价商品</h3>
+                        <button class="close-modal text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-white font-semibold mb-2">${productName}</h4>
+                        <p class="text-gray-400 text-sm">订单号：${orderId}</p>
+                    </div>
+                    
+                    <form id="reviewForm">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-300 mb-3">总体评分</label>
+                            <div class="flex items-center space-x-2">
+                                <div class="star-rating flex space-x-1">
+                                    ${[1,2,3,4,5].map(star => `
+                                        <button type="button" class="star text-2xl text-gray-400 hover:text-yellow-400 transition-colors" data-rating="${star}">
+                                            <i class="far fa-star"></i>
+                                        </button>
+                                    `).join('')}
+                                </div>
+                                <span class="rating-text text-gray-400 text-sm ml-4">请选择评分</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-300 mb-2">评价内容</label>
+                            <textarea id="reviewContent" rows="4" class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 resize-none" placeholder="分享您的使用体验..."></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" class="close-modal px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-xl transition-all duration-300">
+                                取消
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white rounded-xl transition-all duration-300">
+                                提交评价
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 星级评分功能
+            let selectedRating = 0;
+            const stars = modal.querySelectorAll('.star');
+            const ratingText = modal.querySelector('.rating-text');
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    selectedRating = index + 1;
+                    updateStars();
+                });
+                
+                star.addEventListener('mouseenter', () => {
+                    highlightStars(index + 1);
+                });
+            });
+            
+            modal.querySelector('.star-rating').addEventListener('mouseleave', () => {
+                updateStars();
+            });
+            
+            function highlightStars(rating) {
+                stars.forEach((star, index) => {
+                    const icon = star.querySelector('i');
+                    if (index < rating) {
+                        icon.className = 'fas fa-star text-yellow-400';
+                    } else {
+                        icon.className = 'far fa-star text-gray-400';
+                    }
+                });
+                
+                const ratingTexts = ['很差', '较差', '一般', '很好', '非常好'];
+                ratingText.textContent = ratingTexts[rating - 1] || '请选择评分';
+            }
+            
+            function updateStars() {
+                highlightStars(selectedRating);
+            }
+            
+            // 表单提交
+            modal.querySelector('#reviewForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (selectedRating === 0) {
+                    if (typeof showNotification === 'function') {
+                        showNotification('请选择评分！', 'error');
+                    }
+                    return;
+                }
+                
+                const content = modal.querySelector('#reviewContent').value;
+                if (!content.trim()) {
+                    if (typeof showNotification === 'function') {
+                        showNotification('请填写评价内容！', 'error');
+                    }
+                    return;
+                }
+                
+                // 提交评价
+                if (typeof showNotification === 'function') {
+                    showNotification('正在提交评价...', 'info');
+                }
+                
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    if (typeof showNotification === 'function') {
+                        showNotification('评价提交成功！感谢您的反馈', 'success');
+                    }
+                }, 1000);
+            });
+            
+            // 绑定关闭事件
+            modal.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        // 处理联系客服
+        function handleCustomerService(orderId) {
+            if (typeof showNotification === 'function') {
+                showNotification('正在为您转接客服...', 'info');
+            }
+            
+            setTimeout(() => {
+                // 创建客服联系模态框
+                showCustomerServiceModal(orderId);
+            }, 1000);
+        }
+
+        // 显示客服联系模态框
+        function showCustomerServiceModal(orderId) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center';
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl p-8 w-full max-w-md mx-4 border border-gray-700">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-white flex items-center">
+                            <i class="fas fa-headset mr-3 text-blue-400"></i>
+                            联系客服
+                        </h3>
+                        <button class="close-modal text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                            <p class="text-blue-400 font-semibold mb-2">订单咨询</p>
+                            <p class="text-gray-300 text-sm">订单号：${orderId}</p>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <a href="tel:021-6688-8888" class="flex items-center justify-between bg-gray-700/50 hover:bg-gray-700 rounded-lg p-4 transition-all duration-300">
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-green-400 mr-3"></i>
+                                    <div>
+                                        <p class="text-white font-semibold">电话客服</p>
+                                        <p class="text-gray-400 text-sm">021-6688-8888</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </a>
+                            
+                            <button class="w-full flex items-center justify-between bg-gray-700/50 hover:bg-gray-700 rounded-lg p-4 transition-all duration-300">
+                                <div class="flex items-center">
+                                    <i class="fas fa-comments text-blue-400 mr-3"></i>
+                                    <div class="text-left">
+                                        <p class="text-white font-semibold">在线客服</p>
+                                        <p class="text-gray-400 text-sm">7x24小时在线服务</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </button>
+                            
+                            <a href="mailto:service@taiyi-tech.com" class="flex items-center justify-between bg-gray-700/50 hover:bg-gray-700 rounded-lg p-4 transition-all duration-300">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-purple-400 mr-3"></i>
+                                    <div>
+                                        <p class="text-white font-semibold">邮件客服</p>
+                                        <p class="text-gray-400 text-sm">service@taiyi-tech.com</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="bg-gray-700/30 rounded-lg p-4">
+                            <p class="text-gray-400 text-sm text-center">
+                                <i class="fas fa-clock mr-2"></i>
+                                客服工作时间：9:00-18:00（工作日）
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6">
+                        <button class="close-modal px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-xl transition-all duration-300">
+                            关闭
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 在线客服按钮功能
+            const onlineServiceBtn = Array.from(modal.querySelectorAll('button')).find(btn => 
+                btn.textContent.includes('在线客服'));
+            if (onlineServiceBtn) {
+                onlineServiceBtn.addEventListener('click', () => {
+                    if (typeof showNotification === 'function') {
+                        showNotification('正在连接在线客服...', 'info');
+                    }
+                    setTimeout(() => {
+                        if (typeof showNotification === 'function') {
+                            showNotification('客服繁忙，建议您通过电话或邮件联系', 'info');
+                        }
+                    }, 2000);
+                });
+            }
+            
+            // 绑定关闭事件
+            modal.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        // 处理重新下单（已取消订单）
+        function handleReorder(orderId, orderCard) {
+            const productName = orderCard.querySelector('h3').textContent;
+            const productImage = orderCard.querySelector('img').src;
+            const priceElement = orderCard.querySelector('.text-lg.font-bold.text-white') || 
+                                orderCard.querySelector('.text-lg.font-bold.text-gray-500');
+            const productPrice = priceElement ? parseFloat(priceElement.textContent.replace('¥', '').replace(',', '')) : 12.00;
+            
+            // 获取商品规格信息
+            const colorElement = orderCard.querySelector('span:contains("颜色")') || 
+                                Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('颜色'));
+            const quantityElement = orderCard.querySelector('span:contains("数量")') || 
+                                  Array.from(orderCard.querySelectorAll('span')).find(span => span.textContent.includes('数量'));
+            
+            const color = colorElement ? colorElement.textContent.replace('颜色：', '') : '默认';
+            const quantity = quantityElement ? parseInt(quantityElement.textContent.replace('数量：', '')) : 1;
+            
+            if (confirm(`确定要重新下单购买"${productName}"吗？`)) {
+                if (typeof showNotification === 'function') {
+                    showNotification('正在跳转到结算页面...', 'info');
+                }
+                
+                // 构建跳转URL，携带商品信息
+                const checkoutParams = new URLSearchParams({
+                    name: productName,
+                    price: productPrice,
+                    quantity: quantity,
+                    color: color,
+                    image: productImage,
+                    source: 'reorder',
+                    originalOrderId: orderId
+                });
+                
+                // 跳转到结算页面
+                setTimeout(() => {
+                    window.location.href = `checkout.html?${checkoutParams.toString()}`;
+                }, 1500);
+            }
+        }
+
+        // 更新订单状态（本地存储）
+        function updateOrderStatus(orderId, newStatus) {
+            // 这里可以将订单状态更新保存到localStorage或发送到服务器
+            const orderData = {
+                orderId: orderId,
+                status: newStatus,
+                updateTime: new Date().toISOString()
+            };
+            
+            // 保存到本地存储
+            let orderUpdates = JSON.parse(localStorage.getItem('orderUpdates') || '[]');
+            orderUpdates.push(orderData);
+            localStorage.setItem('orderUpdates', JSON.stringify(orderUpdates));
+        }
+
+        // 更新订单卡片为已取消状态
+        function updateOrderCardToCancelled(orderCard, orderId) {
+            orderCard.dataset.status = 'cancelled';
+            
+            // 更新状态标签
+            const statusBadge = orderCard.querySelector('span[class*="bg-"]');
+            statusBadge.className = 'bg-gray-500/20 text-gray-400 px-3 py-1 rounded-full text-sm font-semibold border border-gray-500/30';
+            statusBadge.innerHTML = '<i class="fas fa-times-circle mr-1"></i>已取消';
+            
+            // 添加取消时间
+            const orderTime = orderCard.querySelector('p:contains("下单时间")') ||
+                             Array.from(orderCard.querySelectorAll('p')).find(p => p.textContent.includes('下单时间'));
+            if (orderTime) {
+                const cancelTime = document.createElement('p');
+                cancelTime.className = 'text-gray-500 text-sm';
+                cancelTime.textContent = '取消时间：' + new Date().toLocaleString();
+                orderTime.parentNode.insertBefore(cancelTime, orderTime.nextSibling);
+            }
+            
+            // 更新按钮区域
+            const buttonArea = orderCard.querySelector('.flex.flex-wrap.gap-3');
+            buttonArea.innerHTML = `
+                <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                    <i class="fas fa-redo mr-1"></i>重新下单
+                </button>
+            `;
+            
+            // 重新绑定按钮事件
+            const reorderBtn = buttonArea.querySelector('button');
+            if (reorderBtn) {
+                reorderBtn.addEventListener('click', () => handleReorder(orderId, orderCard));
+            }
+        }
+
+        // 更新订单卡片为已完成状态
+        function updateOrderCardToCompleted(orderCard, orderId) {
+            orderCard.dataset.status = 'completed';
+            
+            // 更新状态标签
+            const statusBadge = orderCard.querySelector('span[class*="bg-"]');
+            statusBadge.className = 'bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold border border-green-500/30';
+            statusBadge.innerHTML = '<i class="fas fa-check-circle mr-1"></i>已完成';
+            
+            // 更新按钮区域，添加评价和再次购买按钮
+            const buttonArea = orderCard.querySelector('.flex.flex-wrap.gap-3');
+            buttonArea.innerHTML = `
+                <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 text-sm">
+                    <i class="fas fa-redo mr-1"></i>再次购买
+                </button>
+                <button class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-all duration-300 text-sm">
+                    <i class="fas fa-star mr-1"></i>评价商品
+                </button>
+                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 text-sm">
+                    <i class="fas fa-headset mr-1"></i>联系客服
+                </button>
+            `;
+            
+            // 重新绑定按钮事件
+            const repurchaseBtn = Array.from(buttonArea.querySelectorAll('button')).find(btn => 
+                btn.textContent.includes('再次购买'));
+            if (repurchaseBtn) {
+                repurchaseBtn.addEventListener('click', () => handleRepurchase(orderId, orderCard));
+            }
+            
+            const reviewBtn = Array.from(buttonArea.querySelectorAll('button')).find(btn => 
+                btn.textContent.includes('评价商品'));
+            if (reviewBtn) {
+                reviewBtn.addEventListener('click', () => handleReview(orderId, orderCard));
+            }
+            
+            const customerServiceBtn = Array.from(buttonArea.querySelectorAll('button')).find(btn => 
+                btn.textContent.includes('联系客服'));
+            if (customerServiceBtn) {
+                customerServiceBtn.addEventListener('click', () => handleCustomerService(orderId));
+            }
+        }
+    </script>
+</body>
+</html> 

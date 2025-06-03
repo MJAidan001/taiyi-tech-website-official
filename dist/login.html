@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' *.cloudflare.com fonts.googleapis.com fonts.gstatic.com cdn.tailwindcss.com cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' fonts.gstatic.com fonts.googleapis.com; style-src 'self' 'unsafe-inline' cdn.tailwindcss.com cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.tailwindcss.com cdn.jsdelivr.net cdnjs.cloudflare.com; connect-src 'self' https:;">
+    <title>用户登录 - 太一科技</title>
+    <meta name="description" content="太一科技用户登录页面">
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white min-h-screen">
+    <!-- 顶部用户栏 -->
+    <div class="fixed w-full z-50 bg-black/60 backdrop-blur-sm border-b border-gray-800/30">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center space-x-4 text-gray-400 hidden-mobile hidden md:flex">
+                    <span><i class="fas fa-phone mr-1"></i>021-6688-8888</span>
+                    <span><i class="fas fa-envelope mr-1"></i>contact@taiyi-tech.com</span>
+                </div>
+                <div class="flex items-center space-x-4 md:ml-auto">
+                    <a href="register.html" class="px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white text-xs hover:from-blue-600 hover:to-purple-700 transition-all">
+                        注册账号
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="fixed w-full z-40 bg-black/80 backdrop-blur-xl border-b border-gray-800/50" style="top: 32px;">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        太一科技
+                    </div>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="min-h-screen flex items-center justify-center pb-12 px-6" style="padding-top: 120px;">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-5"></div>
+        
+        <!-- 粒子效果背景 -->
+        <div class="absolute inset-0">
+            <div class="particles"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-md">
+            <!-- 登录卡片 -->
+            <div class="bg-gray-800/50 backdrop-blur-xl rounded-3xl p-8 border border-gray-700/50 shadow-2xl">
+                <!-- 头部 -->
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold mb-2">
+                        欢迎<span class="text-gradient">回来</span>
+                    </h1>
+                    <p class="text-gray-400">登录您的太一科技账户</p>
+                </div>
+
+                <!-- 登录表单 -->
+                <form id="loginForm" class="space-y-6">
+                    <!-- 邮箱/手机号 -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope mr-2 text-blue-400"></i>
+                            邮箱或手机号
+                        </label>
+                        <input type="text" id="username" name="username" required 
+                               class="form-input w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                               placeholder="请输入邮箱或手机号">
+                        <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                    </div>
+
+                    <!-- 密码 -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-lock mr-2 text-blue-400"></i>
+                            密码
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" required 
+                                   class="form-input w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all pr-12"
+                                   placeholder="请输入密码">
+                            <button type="button" id="togglePassword" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                    </div>
+
+                    <!-- 记住我和忘记密码 -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="rememberMe" class="sr-only">
+                            <div class="checkbox-custom"></div>
+                            <span class="text-gray-300 text-sm ml-3">记住我</span>
+                        </label>
+                        <a href="#" id="forgotPasswordLink" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">
+                            忘记密码？
+                        </a>
+                    </div>
+
+                    <!-- 登录按钮 -->
+                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span class="btn-text">登录</span>
+                        <i class="fas fa-spinner fa-spin ml-2 hidden loading-icon"></i>
+                    </button>
+
+                    <!-- 第三方登录 -->
+                    <div class="relative my-8">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 bg-gray-800/50 text-gray-400">或使用以下方式登录</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <button type="button" class="social-login-btn">
+                            <i class="fab fa-weixin text-green-400"></i>
+                            <span class="sr-only">微信登录</span>
+                        </button>
+                        <button type="button" class="social-login-btn">
+                            <i class="fab fa-qq text-blue-400"></i>
+                            <span class="sr-only">QQ登录</span>
+                        </button>
+                        <button type="button" class="social-login-btn">
+                            <i class="fab fa-weibo text-red-400"></i>
+                            <span class="sr-only">微博登录</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- 注册链接 -->
+                <div class="text-center mt-8 pt-6 border-t border-gray-700">
+                    <p class="text-gray-400">
+                        还没有账户？
+                        <a href="register.html" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                            立即注册
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 安全提示 -->
+            <div class="mt-8 text-center">
+                <div class="inline-flex items-center px-4 py-2 bg-gray-800/30 backdrop-blur-sm rounded-full border border-gray-700/50">
+                    <i class="fas fa-shield-alt text-green-400 mr-2"></i>
+                    <span class="text-gray-300 text-sm">您的信息受到SSL加密保护</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 忘记密码模态框 -->
+    <div id="forgotPasswordModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-gray-800/50 backdrop-blur-xl rounded-3xl p-8 w-full max-w-md border border-gray-700/50 shadow-2xl">
+                <!-- 模态框头部 -->
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">忘记密码</h2>
+                    <button id="closeForgotModal" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- 步骤指示器 -->
+                <div class="flex items-center justify-center mb-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="step-indicator active" data-step="1">
+                            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm font-bold">1</div>
+                            <span class="text-xs mt-2 text-blue-400">验证身份</span>
+                        </div>
+                        <div class="w-12 h-0.5 bg-gray-600 step-line"></div>
+                        <div class="step-indicator" data-step="2">
+                            <div class="w-8 h-8 rounded-full bg-gray-600 text-gray-400 flex items-center justify-center text-sm font-bold">2</div>
+                            <span class="text-xs mt-2 text-gray-400">输入验证码</span>
+                        </div>
+                        <div class="w-12 h-0.5 bg-gray-600 step-line"></div>
+                        <div class="step-indicator" data-step="3">
+                            <div class="w-8 h-8 rounded-full bg-gray-600 text-gray-400 flex items-center justify-center text-sm font-bold">3</div>
+                            <span class="text-xs mt-2 text-gray-400">重置密码</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤1：验证身份 -->
+                <div id="step1" class="reset-step">
+                    <form id="verifyIdentityForm">
+                        <!-- 先选择验证方式 -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-300 mb-4">请选择密码重置方式</label>
+                            <div class="space-y-3">
+                                <label class="verification-method-option flex items-center p-4 bg-gray-700/30 rounded-lg cursor-pointer hover:bg-gray-700/50 transition-all border-2 border-transparent" data-method="email">
+                                    <input type="radio" name="verifyMethod" value="email" class="mr-4 text-blue-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-envelope text-blue-400 text-xl mr-4"></i>
+                                        <div>
+                                            <div class="text-white font-semibold">邮箱验证</div>
+                                            <div class="text-gray-400 text-sm">通过注册邮箱接收验证码</div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="verification-method-option flex items-center p-4 bg-gray-700/30 rounded-lg cursor-pointer hover:bg-gray-700/50 transition-all border-2 border-transparent" data-method="sms">
+                                    <input type="radio" name="verifyMethod" value="sms" class="mr-4 text-blue-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-sms text-green-400 text-xl mr-4"></i>
+                                        <div>
+                                            <div class="text-white font-semibold">短信验证</div>
+                                            <div class="text-gray-400 text-sm">通过注册手机号接收验证码</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- 根据选择显示对应的输入框 -->
+                        <div id="accountInputSection" class="mb-6 hidden">
+                            <label class="block text-sm font-semibold text-gray-300 mb-3">
+                                <i id="accountIcon" class="fas fa-envelope mr-2 text-blue-400"></i>
+                                <span id="accountLabel">请输入您的注册邮箱</span>
+                            </label>
+                            <input type="text" id="resetAccount" required 
+                                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                   placeholder="">
+                            <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                            <div class="text-gray-400 text-xs mt-2">
+                                <span id="accountHint">验证码将发送到您的注册邮箱</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            <span class="btn-text">发送验证码</span>
+                            <i class="fas fa-spinner fa-spin ml-2 hidden loading-icon"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 步骤2：输入验证码 -->
+                <div id="step2" class="reset-step hidden">
+                    <form id="verifyCodeForm">
+                        <div class="text-center mb-6">
+                            <i class="fas fa-envelope text-4xl text-blue-400 mb-4"></i>
+                            <p class="text-gray-300 text-sm">
+                                验证码已发送至 <span id="maskedAccount" class="text-blue-400 font-semibold"></span>
+                            </p>
+                            <p class="text-gray-400 text-xs mt-2">请查收并输入6位验证码</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-300 mb-3">
+                                <i class="fas fa-key mr-2 text-blue-400"></i>
+                                验证码
+                            </label>
+                            <input type="text" id="verificationCode" required maxlength="6"
+                                   class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-center text-2xl font-bold tracking-widest"
+                                   placeholder="000000">
+                            <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-gray-400 text-sm">
+                                验证码有效期 <span id="countdown" class="text-blue-400 font-bold">300</span> 秒
+                            </span>
+                            <button type="button" id="resendCode" class="text-blue-400 hover:text-blue-300 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                重新发送
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                                <span class="btn-text">验证</span>
+                                <i class="fas fa-spinner fa-spin ml-2 hidden loading-icon"></i>
+                            </button>
+                            <button type="button" id="backToStep1" class="w-full py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300">
+                                返回上一步
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 步骤3：重置密码 -->
+                <div id="step3" class="reset-step hidden">
+                    <form id="resetPasswordForm">
+                        <div class="text-center mb-6">
+                            <i class="fas fa-check-circle text-4xl text-green-400 mb-4"></i>
+                            <p class="text-white font-semibold">验证成功！</p>
+                            <p class="text-gray-400 text-sm">请设置您的新密码</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-2">
+                                    <i class="fas fa-lock mr-2 text-blue-400"></i>
+                                    新密码
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="newPassword" required 
+                                           class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all pr-12"
+                                           placeholder="请输入新密码（至少6位）">
+                                    <button type="button" class="toggle-password absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-2">
+                                    <i class="fas fa-lock mr-2 text-blue-400"></i>
+                                    确认新密码
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="confirmPassword" required 
+                                           class="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all pr-12"
+                                           placeholder="请再次输入新密码">
+                                    <button type="button" class="toggle-password absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="error-message hidden text-red-400 text-sm mt-2"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 密码强度指示器 -->
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-400">密码强度</span>
+                                <span id="passwordStrengthText" class="text-sm text-gray-400">弱</span>
+                            </div>
+                            <div class="w-full bg-gray-600 rounded-full h-2">
+                                <div id="passwordStrengthBar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-blue-700 transition-all duration-300">
+                            <span class="btn-text">重置密码</span>
+                            <i class="fas fa-spinner fa-spin ml-2 hidden loading-icon"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成功/错误提示 -->
+    <div id="notification" class="fixed top-4 right-4 z-50 hidden">
+        <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 shadow-lg max-w-sm">
+            <div class="flex items-center">
+                <div class="notification-icon mr-3">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                </div>
+                <div class="notification-content">
+                    <p class="notification-message text-white text-sm"></p>
+                </div>
+                <button class="notification-close ml-4 text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+    <script>
+        // 登录页面特定功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const rememberMeCheckbox = document.getElementById('rememberMe');
+
+            // 密码显示/隐藏切换
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // 记住我复选框样式
+            rememberMeCheckbox.addEventListener('change', function() {
+                const customCheckbox = this.nextElementSibling;
+                if (this.checked) {
+                    customCheckbox.classList.add('checked');
+                } else {
+                    customCheckbox.classList.remove('checked');
+                }
+            });
+
+            // 表单提交
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = rememberMeCheckbox.checked;
+
+                // 表单验证
+                if (!validateForm(username, password)) {
+                    return;
+                }
+
+                // 显示加载状态
+                showLoading(true);
+
+                // 模拟登录请求
+                setTimeout(() => {
+                    // 这里应该是实际的登录API调用
+                    if (username && password) {
+                        // 登录成功 - 使用统一的登录成功处理函数
+                        if (typeof window.TaiyiAuth !== 'undefined' && window.TaiyiAuth.handleLoginSuccess) {
+                            window.TaiyiAuth.handleLoginSuccess(username, rememberMe);
+                        } else {
+                            // 备用处理方式
+                            localStorage.setItem('isLoggedIn', 'true');
+                            localStorage.setItem('userName', username.split('@')[0] || username.substring(0, 10));
+                            
+                            if (rememberMe) {
+                                localStorage.setItem('rememberMe', 'true');
+                                localStorage.setItem('username', username);
+                            }
+                            
+                            showNotification('登录成功！正在跳转...', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1500);
+                        }
+                    } else {
+                        // 登录失败
+                        showNotification('用户名或密码错误', 'error');
+                        showLoading(false);
+                    }
+                }, 2000);
+            });
+
+            // 社交登录按钮
+            document.querySelectorAll('.social-login-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const platform = this.querySelector('i').classList.contains('fa-weixin') ? '微信' :
+                                   this.querySelector('i').classList.contains('fa-qq') ? 'QQ' : '微博';
+                    showNotification(`${platform}登录功能开发中...`, 'info');
+                });
+            });
+
+            // 加载保存的用户名
+            if (localStorage.getItem('rememberMe') === 'true') {
+                const savedUsername = localStorage.getItem('username');
+                if (savedUsername) {
+                    document.getElementById('username').value = savedUsername;
+                    rememberMeCheckbox.checked = true;
+                    rememberMeCheckbox.dispatchEvent(new Event('change'));
+                }
+            }
+            
+            // 初始化忘记密码功能
+            initForgotPasswordModal();
+        });
+
+        // 初始化忘记密码模态框
+        function initForgotPasswordModal() {
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+            const closeForgotModal = document.getElementById('closeForgotModal');
+            
+            // 打开忘记密码模态框
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                forgotPasswordModal.classList.remove('hidden');
+                resetForgotPasswordModal();
+            });
+            
+            // 关闭模态框
+            closeForgotModal.addEventListener('click', function() {
+                forgotPasswordModal.classList.add('hidden');
+            });
+            
+            // 点击背景关闭模态框
+            forgotPasswordModal.addEventListener('click', function(e) {
+                if (e.target === forgotPasswordModal) {
+                    forgotPasswordModal.classList.add('hidden');
+                }
+            });
+            
+            // 初始化各步骤的功能
+            initStep1();
+            initStep2();
+            initStep3();
+        }
+
+        // 重置忘记密码模态框状态
+        function resetForgotPasswordModal() {
+            // 显示第一步
+            showStep(1);
+            
+            // 清空表单
+            document.getElementById('verifyIdentityForm').reset();
+            document.getElementById('verifyCodeForm').reset();
+            document.getElementById('resetPasswordForm').reset();
+            
+            // 清除错误信息
+            document.querySelectorAll('#forgotPasswordModal .error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // 重置按钮状态
+            document.querySelectorAll('#forgotPasswordModal button').forEach(btn => {
+                btn.disabled = false;
+                const btnText = btn.querySelector('.btn-text');
+                const loadingIcon = btn.querySelector('.loading-icon');
+                if (btnText && loadingIcon) {
+                    loadingIcon.classList.add('hidden');
+                }
+            });
+        }
+
+        // 显示指定步骤
+        function showStep(stepNumber) {
+            // 隐藏所有步骤
+            document.querySelectorAll('.reset-step').forEach(step => {
+                step.classList.add('hidden');
+            });
+            
+            // 显示当前步骤
+            document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+            
+            // 更新步骤指示器
+            updateStepIndicators(stepNumber);
+        }
+
+        // 更新步骤指示器
+        function updateStepIndicators(currentStep) {
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                const stepNum = index + 1;
+                const circle = indicator.querySelector('div');
+                const text = indicator.querySelector('span');
+                
+                indicator.classList.remove('active');
+                
+                if (stepNum < currentStep) {
+                    // 已完成的步骤
+                    circle.className = 'w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-bold';
+                    circle.innerHTML = '<i class="fas fa-check"></i>';
+                    text.className = 'text-xs mt-2 text-green-400';
+                } else if (stepNum === currentStep) {
+                    // 当前步骤
+                    circle.className = 'w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm font-bold';
+                    circle.textContent = stepNum;
+                    text.className = 'text-xs mt-2 text-blue-400';
+                    indicator.classList.add('active');
+                } else {
+                    // 未来步骤
+                    circle.className = 'w-8 h-8 rounded-full bg-gray-600 text-gray-400 flex items-center justify-center text-sm font-bold';
+                    circle.textContent = stepNum;
+                    text.className = 'text-xs mt-2 text-gray-400';
+                }
+            });
+        }
+
+        // 步骤1：验证身份
+        function initStep1() {
+            const verifyIdentityForm = document.getElementById('verifyIdentityForm');
+            const methodOptions = document.querySelectorAll('input[name="verifyMethod"]');
+            const accountInputSection = document.getElementById('accountInputSection');
+            const accountIcon = document.getElementById('accountIcon');
+            const accountLabel = document.getElementById('accountLabel');
+            const accountInput = document.getElementById('resetAccount');
+            const accountHint = document.getElementById('accountHint');
+            const submitBtn = verifyIdentityForm.querySelector('button[type="submit"]');
+            
+            // 验证方式选择事件
+            methodOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    updateVerificationMethodUI(this.value);
+                    updateSubmitButtonState();
+                });
+            });
+            
+            // 账号输入事件
+            accountInput.addEventListener('input', function() {
+                updateSubmitButtonState();
+            });
+            
+            // 更新验证方式UI
+            function updateVerificationMethodUI(method) {
+                // 更新选中状态的视觉效果
+                document.querySelectorAll('.verification-method-option').forEach(option => {
+                    option.classList.remove('border-blue-500', 'bg-blue-500/10');
+                    option.classList.add('border-transparent');
+                });
+                
+                const selectedOption = document.querySelector(`[data-method="${method}"]`);
+                selectedOption.classList.add('border-blue-500', 'bg-blue-500/10');
+                selectedOption.classList.remove('border-transparent');
+                
+                // 显示账号输入区域
+                accountInputSection.classList.remove('hidden');
+                
+                if (method === 'email') {
+                    // 邮箱验证模式
+                    accountIcon.className = 'fas fa-envelope mr-2 text-blue-400';
+                    accountLabel.textContent = '请输入您的注册邮箱';
+                    accountInput.placeholder = 'example@email.com';
+                    accountInput.type = 'email';
+                    accountHint.textContent = '验证码将发送到您的注册邮箱';
+                } else {
+                    // 短信验证模式
+                    accountIcon.className = 'fas fa-mobile-alt mr-2 text-green-400';
+                    accountLabel.textContent = '请输入您的注册手机号';
+                    accountInput.placeholder = '138****8888';
+                    accountInput.type = 'tel';
+                    accountHint.textContent = '验证码将通过短信发送到您的手机';
+                }
+                
+                // 清空之前的输入和错误信息
+                accountInput.value = '';
+                const errorEl = accountInput.parentNode.querySelector('.error-message');
+                if (errorEl) {
+                    errorEl.classList.add('hidden');
+                }
+                accountInput.classList.remove('border-red-500');
+            }
+            
+            // 更新提交按钮状态
+            function updateSubmitButtonState() {
+                const selectedMethod = document.querySelector('input[name="verifyMethod"]:checked');
+                const accountValue = accountInput.value.trim();
+                
+                if (selectedMethod && accountValue) {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            }
+            
+            // 表单提交
+            verifyIdentityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const selectedMethod = document.querySelector('input[name="verifyMethod"]:checked');
+                const account = accountInput.value.trim();
+                
+                if (!selectedMethod) {
+                    showNotification('请选择验证方式', 'error');
+                    return;
+                }
+                
+                // 根据选择的方式验证账号格式
+                if (!validateAccountByMethod(account, selectedMethod.value)) {
+                    return;
+                }
+                
+                // 显示加载状态
+                showFormLoading(this, true, '发送中...');
+                
+                // 模拟发送验证码
+                setTimeout(() => {
+                    // 成功发送验证码
+                    const maskedAccount = maskAccount(account, selectedMethod.value);
+                    document.getElementById('maskedAccount').textContent = maskedAccount;
+                    
+                    // 更新步骤2的图标和描述
+                    updateStep2Display(selectedMethod.value);
+                    
+                    showFormLoading(this, false);
+                    showStep(2);
+                    startCountdown();
+                    
+                    const methodText = selectedMethod.value === 'email' ? '邮箱' : '手机号';
+                    showNotification(`验证码已发送到您的${methodText}！请查收`, 'success');
+                }, 2000);
+            });
+            
+            // 根据方法验证账号
+            function validateAccountByMethod(account, method) {
+                if (!account) {
+                    const fieldType = method === 'email' ? '邮箱' : '手机号';
+                    showFieldError('resetAccount', `请输入${fieldType}`);
+                    return false;
+                }
+                
+                if (method === 'email') {
+                    if (!isValidEmail(account)) {
+                        showFieldError('resetAccount', '请输入有效的邮箱地址');
+                        return false;
+                    }
+                } else if (method === 'sms') {
+                    if (!isValidPhone(account)) {
+                        showFieldError('resetAccount', '请输入有效的手机号码');
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            // 更新步骤2的显示
+            function updateStep2Display(method) {
+                const step2Icon = document.querySelector('#step2 i.fas');
+                const step2Text = document.querySelector('#step2 p');
+                
+                if (method === 'email') {
+                    step2Icon.className = 'fas fa-envelope text-4xl text-blue-400 mb-4';
+                    step2Text.innerHTML = `验证码已发送至 <span id="maskedAccount" class="text-blue-400 font-semibold"></span>`;
+                } else {
+                    step2Icon.className = 'fas fa-mobile-alt text-4xl text-green-400 mb-4';
+                    step2Text.innerHTML = `验证码已发送至 <span id="maskedAccount" class="text-green-400 font-semibold"></span>`;
+                }
+            }
+        }
+
+        // 步骤2：验证码验证
+        function initStep2() {
+            const verifyCodeForm = document.getElementById('verifyCodeForm');
+            const backToStep1 = document.getElementById('backToStep1');
+            const resendCode = document.getElementById('resendCode');
+            const verificationCodeInput = document.getElementById('verificationCode');
+            
+            // 返回上一步
+            backToStep1.addEventListener('click', function() {
+                showStep(1);
+                stopCountdown();
+            });
+            
+            // 重新发送验证码
+            resendCode.addEventListener('click', function() {
+                const account = document.getElementById('resetAccount').value;
+                const method = document.querySelector('input[name="verifyMethod"]:checked').value;
+                
+                this.disabled = true;
+                this.textContent = '发送中...';
+                
+                setTimeout(() => {
+                    this.textContent = '重新发送';
+                    startCountdown();
+                    showNotification('验证码已重新发送！', 'success');
+                }, 2000);
+            });
+            
+            // 验证码输入限制
+            verificationCodeInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').substring(0, 6);
+            });
+            
+            // 验证码提交
+            verifyCodeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const code = verificationCodeInput.value.trim();
+                
+                if (!validateVerificationCode(code)) {
+                    return;
+                }
+                
+                showFormLoading(this, true, '验证中...');
+                
+                // 模拟验证码验证
+                setTimeout(() => {
+                    if (code === '123456' || code.length === 6) {
+                        // 验证成功
+                        showFormLoading(this, false);
+                        showStep(3);
+                        stopCountdown();
+                        showNotification('验证成功！', 'success');
+                    } else {
+                        // 验证失败
+                        showFormLoading(this, false);
+                        showFieldError('verificationCode', '验证码错误，请重新输入');
+                        showNotification('验证码错误', 'error');
+                    }
+                }, 1500);
+            });
+        }
+
+        // 步骤3：重置密码
+        function initStep3() {
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            
+            // 密码显示/隐藏切换
+            document.querySelectorAll('.toggle-password').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                });
+            });
+            
+            // 密码强度检测
+            newPasswordInput.addEventListener('input', function() {
+                updatePasswordStrength(this.value);
+            });
+            
+            // 重置密码表单提交
+            resetPasswordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                
+                if (!validateNewPassword(newPassword, confirmPassword)) {
+                    return;
+                }
+                
+                showFormLoading(this, true, '重置中...');
+                
+                // 模拟重置密码
+                setTimeout(() => {
+                    showFormLoading(this, false);
+                    
+                    // 关闭模态框
+                    document.getElementById('forgotPasswordModal').classList.add('hidden');
+                    
+                    // 显示成功消息
+                    showNotification('密码重置成功！请使用新密码登录', 'success');
+                    
+                    // 清空登录表单密码字段
+                    document.getElementById('password').value = '';
+                }, 2000);
+            });
+        }
+
+        // 表单验证
+        function validateForm(username, password) {
+            let isValid = true;
+
+            // 清除之前的错误信息
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // 验证用户名
+            if (!username.trim()) {
+                showFieldError('username', '请输入邮箱或手机号');
+                isValid = false;
+            } else if (!isValidEmail(username) && !isValidPhone(username)) {
+                showFieldError('username', '请输入有效的邮箱或手机号');
+                isValid = false;
+            }
+
+            // 验证密码
+            if (!password.trim()) {
+                showFieldError('password', '请输入密码');
+                isValid = false;
+            } else if (password.length < 6) {
+                showFieldError('password', '密码长度至少6位');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // 显示字段错误
+        function showFieldError(fieldName, message) {
+            const field = document.getElementById(fieldName);
+            const errorEl = field.parentNode.querySelector('.error-message');
+            errorEl.textContent = message;
+            errorEl.classList.remove('hidden');
+            field.classList.add('border-red-500');
+            
+            // 清除错误状态
+            field.addEventListener('input', function() {
+                this.classList.remove('border-red-500');
+                errorEl.classList.add('hidden');
+            }, { once: true });
+        }
+
+        // 邮箱验证
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // 手机号验证
+        function isValidPhone(phone) {
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // 显示加载状态
+        function showLoading(show) {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loadingIcon = submitBtn.querySelector('.loading-icon');
+
+            if (show) {
+                submitBtn.disabled = true;
+                btnText.textContent = '登录中...';
+                loadingIcon.classList.remove('hidden');
+            } else {
+                submitBtn.disabled = false;
+                btnText.textContent = '登录';
+                loadingIcon.classList.add('hidden');
+            }
+        }
+
+        // 显示通知
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const icon = notification.querySelector('.notification-icon i');
+            const messageEl = notification.querySelector('.notification-message');
+            const closeBtn = notification.querySelector('.notification-close');
+
+            // 设置图标和样式
+            icon.className = type === 'success' ? 'fas fa-check-circle text-green-400' :
+                           type === 'error' ? 'fas fa-exclamation-circle text-red-400' :
+                           'fas fa-info-circle text-blue-400';
+
+            messageEl.textContent = message;
+            notification.classList.remove('hidden');
+
+            // 自动隐藏
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+
+            // 手动关闭
+            closeBtn.addEventListener('click', () => {
+                notification.classList.add('hidden');
+            });
+        }
+
+        // ========== 忘记密码相关辅助函数 ==========
+
+        // 验证验证码
+        function validateVerificationCode(code) {
+            if (!code) {
+                showFieldError('verificationCode', '请输入验证码');
+                return false;
+            }
+            
+            if (code.length !== 6) {
+                showFieldError('verificationCode', '验证码必须是6位数字');
+                return false;
+            }
+            
+            if (!/^\d{6}$/.test(code)) {
+                showFieldError('verificationCode', '验证码只能包含数字');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // 验证新密码
+        function validateNewPassword(newPassword, confirmPassword) {
+            let isValid = true;
+            
+            // 清除之前的错误信息
+            document.querySelectorAll('#step3 .error-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            if (!newPassword) {
+                showFieldError('newPassword', '请输入新密码');
+                isValid = false;
+            } else if (newPassword.length < 6) {
+                showFieldError('newPassword', '密码长度至少6位');
+                isValid = false;
+            }
+            
+            if (!confirmPassword) {
+                showFieldError('confirmPassword', '请确认新密码');
+                isValid = false;
+            } else if (newPassword !== confirmPassword) {
+                showFieldError('confirmPassword', '两次输入的密码不一致');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        // 遮掩账号显示
+        function maskAccount(account, method) {
+            if (method === 'email' || account.includes('@')) {
+                // 邮箱遮掩
+                const [username, domain] = account.split('@');
+                const maskedUsername = username.substring(0, 2) + '*'.repeat(Math.max(1, username.length - 4)) + username.slice(-2);
+                return maskedUsername + '@' + domain;
+            } else {
+                // 手机号遮掩
+                return account.substring(0, 3) + '****' + account.slice(-4);
+            }
+        }
+
+        // 表单加载状态
+        function showFormLoading(form, show, text = '处理中...') {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loadingIcon = submitBtn.querySelector('.loading-icon');
+
+            if (show) {
+                submitBtn.disabled = true;
+                if (btnText) btnText.textContent = text;
+                if (loadingIcon) loadingIcon.classList.remove('hidden');
+            } else {
+                submitBtn.disabled = false;
+                if (btnText) {
+                    // 根据表单类型恢复原始文本
+                    if (form.id === 'verifyIdentityForm') {
+                        btnText.textContent = '发送验证码';
+                    } else if (form.id === 'verifyCodeForm') {
+                        btnText.textContent = '验证';
+                    } else if (form.id === 'resetPasswordForm') {
+                        btnText.textContent = '重置密码';
+                    }
+                }
+                if (loadingIcon) loadingIcon.classList.add('hidden');
+            }
+        }
+
+        // 倒计时功能
+        let countdownTimer = null;
+        let countdownSeconds = 300; // 5分钟
+
+        function startCountdown() {
+            countdownSeconds = 300;
+            const countdownEl = document.getElementById('countdown');
+            const resendBtn = document.getElementById('resendCode');
+            
+            resendBtn.disabled = true;
+            
+            countdownTimer = setInterval(() => {
+                countdownSeconds--;
+                countdownEl.textContent = countdownSeconds;
+                
+                if (countdownSeconds <= 0) {
+                    stopCountdown();
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = '重新发送';
+                }
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            if (countdownTimer) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+        }
+
+        // 密码强度检测
+        function updatePasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            let strength = 0;
+            let strengthLabel = '弱';
+            let strengthColor = 'bg-red-500';
+            
+            if (password.length >= 6) strength += 1;
+            if (password.length >= 10) strength += 1;
+            if (/[a-z]/.test(password)) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            const strengthPercent = Math.min(100, (strength / 6) * 100);
+            
+            if (strength <= 2) {
+                strengthLabel = '弱';
+                strengthColor = 'bg-red-500';
+            } else if (strength <= 4) {
+                strengthLabel = '中';
+                strengthColor = 'bg-yellow-500';
+            } else {
+                strengthLabel = '强';
+                strengthColor = 'bg-green-500';
+            }
+            
+            strengthBar.style.width = strengthPercent + '%';
+            strengthBar.className = `h-2 rounded-full transition-all duration-300 ${strengthColor}`;
+            strengthText.textContent = strengthLabel;
+            strengthText.className = `text-sm ${strengthColor.replace('bg-', 'text-')}`;
+        }
+    </script>
+</body>
+</html> 
