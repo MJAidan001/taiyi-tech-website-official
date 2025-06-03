@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "太一科技官方网站",
   "scripts": {
-    "build": "npm run build:css && npm run copy:files",
-    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "copy:files": "mkdir -p dist && cp -r *.html *.js images favicon.svg dist/ 2>/dev/null || true",
-    "copy:files:win": "if not exist dist mkdir dist && copy *.html dist && copy *.js dist && if not exist dist\\images mkdir dist\\images && copy images\\* dist\\images && copy favicon.svg dist",
-    "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "build": "tailwindcss -i ./src/input.css -o ./styles.css --minify",
+    "watch": "tailwindcss -i ./src/input.css -o ./styles.css --watch"
   },
   "dependencies": {
     "tailwindcss": "^3.4.1"
@@ -16,4 +13,4 @@
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35"
   }
-}
+} 
