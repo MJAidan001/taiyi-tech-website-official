@@ -3,12 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' *.cloudflare.com fonts.googleapis.com fonts.gstatic.com cdn.tailwindcss.com cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.tailwindcss.com cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.tailwindcss.com cdn.jsdelivr.net cdnjs.cloudflare.com; connect-src 'self' https:;">
-    <title>太一科技 - 量子计算与人工智能解决方案</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; font-src 'self' https: fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com; img-src 'self' data: https: images.unsplash.com; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; script-src 'self' 'unsafe-inline' https: cdn.jsdelivr.net cdnjs.cloudflare.com;">
+    <title>太一科技 - 情感化AI智能体领导者</title>
+    <meta name="description" content="上海太一智枢科技发展有限公司 - 专注情感化AI智能体开发，让AI更懂人心">
+    <meta name="keywords" content="AI智能体,情感计算,人工智能,机器学习,深度学习,上海太一科技">
     <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="dist/output.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
 </head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress"></div>
+    
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- 顶部用户栏 -->
+    <div class="fixed w-full z-50 bg-black/60 backdrop-blur-sm border-b border-gray-800/30">
+        <div class="container mx-auto px-6 py-0.5">
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-3 text-gray-400 hidden-mobile hidden md:flex">
+                    <span><i class="fas fa-phone mr-1"></i>021-6688-8888</span>
+                    <span><i class="fas fa-envelope mr-1"></i>contact@taiyi-tech.com</span>
+                </div>
+                <div class="flex items-center space-x-3 md:ml-auto">
+                    <!-- 未登录状态 -->
+                    <div id="userNotLoggedIn" class="flex items-center space-x-3">
+                        <a href="login.html" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i>登录
+                        </a>
+                        <a href="register.html" class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white text-xs hover:from-blue-600 hover:to-purple-700 transition-all">
+                            注册
+                        </a>
+                    </div>
