@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "太一科技官方网站",
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./styles.css --minify",
+    "build": "tailwindcss -i ./src/input.css -o ./styles.css --minify && mkdir -p dist && cp *.html *.css *.js dist/",
     "watch": "tailwindcss -i ./src/input.css -o ./styles.css --watch"
   },
   "dependencies": {
@@ -13,4 +13,4 @@
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35"
   }
-} 
+}
