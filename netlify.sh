@@ -18,13 +18,8 @@ npm run build
 echo "Ensuring all HTML files are in dist directory..."
 cp -r *.html dist/ 2>/dev/null || true
 
-# 确保所有JS文件都在dist目录中
-echo "Ensuring all JS files are in dist directory..."
-cp -r *.js dist/ 2>/dev/null || true
-
-# 创建_redirects文件
-echo "Creating _redirects file..."
-echo "/* /index.html 200" > dist/_redirects
-echo "/404.html 404" >> dist/_redirects
+# 列出dist目录内容进行检查
+echo "Dist directory contents:"
+ls -la dist/
 
 echo "Build completed successfully!"

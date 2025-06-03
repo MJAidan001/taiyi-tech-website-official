@@ -3,12 +3,541 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' *.cloudflare.com fonts.googleapis.com fonts.gstatic.com cdn.tailwindcss.com cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.tailwindcss.com cdnjs.cloudflare.com fonts.googleapis.com fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.tailwindcss.com cdn.jsdelivr.net cdnjs.cloudflare.com; connect-src 'self' https:;">
-    <title>硬件产品 - 太一科技</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; font-src 'self' https: fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com; img-src 'self' data: https: images.unsplash.com; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com; script-src 'self' 'unsafe-inline' https: cdn.jsdelivr.net cdnjs.cloudflare.com;">
+    <title>智能硬件 - 太一科技</title>
+    <meta name="description" content="太一科技智能硬件 - 情感化AI技术与智能硬件的完美融合">
+    <meta name="keywords" content="智能硬件,AI智能戒指,智能穿戴,情感计算,太一科技">
     <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="dist/output.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
 </head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress"></div>
+    
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- 顶部用户栏 -->
+    <div class="fixed w-full z-50 bg-black/60 backdrop-blur-sm border-b border-gray-800/30">
+        <div class="container mx-auto px-6 py-0.5">
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-3 text-gray-400 hidden-mobile hidden md:flex">
+                    <span><i class="fas fa-phone mr-1"></i>021-6688-8888</span>
+                    <span><i class="fas fa-envelope mr-1"></i>contact@taiyi-tech.com</span>
+                </div>
+                <div class="flex items-center space-x-3 md:ml-auto">
+                    <!-- 未登录状态 -->
+                    <div id="userNotLoggedIn" class="flex items-center space-x-3">
+                        <a href="login.html" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i>登录
+                        </a>
+                        <a href="register.html" class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white text-xs hover:from-blue-600 hover:to-purple-700 transition-all">
+                            注册
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主导航栏 -->
+    <nav class="fixed w-full z-40 bg-black/80 backdrop-blur-xl border-b border-gray-800/50 transition-all duration-300" style="top: 24px;">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-xl"></i>
+                    </div>
+                    <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        <a href="index.html">太一科技</a>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="index.html#about" class="nav-link relative group">
+                        <span>关于我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="products.html" class="nav-link relative group">
+                        <span>产品服务</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <!-- <a href="solutions.html" class="nav-link relative group">
+                        <span>解决方案</span>
+                        <span class="nav-underline"></span>
+                    </a> -->
+                    <a href="hardware.html" class="nav-link relative group text-blue-400">
+                        <span>智能硬件</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                    <a href="contact.html" class="nav-link relative group">
+                        <span>联系我们</span>
+                        <span class="nav-underline"></span>
+                    </a>
+                </div>
+                <div class="lg:hidden">
+                    <button class="mobile-menu-btn text-white hover:text-blue-400 transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu hidden lg:hidden bg-black/95 backdrop-blur-xl border-t border-gray-800">
+            <div class="container mx-auto px-6 py-6">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html#about" class="text-white hover:text-blue-400 transition-colors py-2">关于我们</a>
+                    <a href="products.html" class="text-white hover:text-blue-400 transition-colors py-2">产品服务</a>
+                    <a href="solutions.html" class="text-white hover:text-blue-400 transition-colors py-2">解决方案</a>
+                    <a href="index.html#future" class="text-white hover:text-blue-400 transition-colors py-2">发展前景</a>
+                    <a href="hardware.html" class="text-blue-400 transition-colors py-2">智能硬件</a>
+                    <a href="contact.html" class="text-white hover:text-blue-400 transition-colors py-2">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题区域 -->
+    <!-- <section class="py-32 bg-gradient-to-b from-gray-900 via-black to-gray-900 relative" style="padding-top: 120px;">
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="fade-in mb-8">
+                <span class="section-badge">Smart Hardware</span>
+                <h1 class="section-title">
+                    智能<span class="text-gradient">硬件</span>
+                </h1>
+                <div class="section-divider mx-auto"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                    情感化AI技术与智能硬件的完美融合，让科技更懂你的心
+                </p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- 产品商城 -->
+    <section class="py-32 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-black"></div>
+        <div class="absolute inset-0">
+            <!-- 背景装饰 -->
+            <div class="absolute top-20 left-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- 智能硬件商品区域 -->
+            <div>
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-6 text-white">产品系列</h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto font-light">
+                        从智能戒指到AR眼镜，我们为您提供全方位的情感AI硬件产品
+                    </p>
+                </div>
+                
+                <!-- 筛选按钮 -->
+                <div class="flex justify-center mb-12 fade-in">
+                    <div class="inline-flex bg-gray-800/50 backdrop-blur-sm rounded-full p-2 space-x-2">
+                        <button class="category-btn active" data-category="all">
+                            <i class="fas fa-th-large mr-2"></i>
+                            <span>全部商品</span>
+                        </button>
+                        <button class="category-btn" data-category="wearable">
+                            <i class="fas fa-watch mr-2"></i>
+                            <span>智能穿戴</span>
+                        </button>
+                        <button class="category-btn" data-category="health">
+                            <i class="fas fa-heartbeat mr-2"></i>
+                            <span>健康监测</span>
+                        </button>
+                        <button class="category-btn" data-category="entertainment">
+                            <i class="fas fa-music mr-2"></i>
+                            <span>娱乐体验</span>
+                        </button>
+                        <button class="category-btn" data-category="professional">
+                            <i class="fas fa-cogs mr-2"></i>
+                            <span>专业设备</span>
+                        </button>
+                        <button class="category-btn" data-category="fashion">
+                            <i class="fas fa-gem mr-2"></i>
+                            <span>时尚科技</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 热门产品展示 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12" id="featuredProducts">
+                    <!-- 智能戒指 -->
+                    <div class="product-card fade-in cursor-pointer" data-product-id="ring-001" data-category="wearable health">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能戒指" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge new">新品</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">情感感知</span>
+                                <span class="product-tag">健康监测</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">太一智能戒指</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">微型情感传感器，实时监测心率变异性和皮肤电导，AI分析情绪状态，提供个性化情感建议。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>情感识别</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-battery-full mr-1"></i>
+                                    <span>7天续航</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-blue-400">¥2,999</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-blue-500 to-cyan-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 智能手环 -->
+                    <div class="product-card fade-in delay-100 cursor-pointer" data-product-id="band-001" data-category="wearable health">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能手环Pro" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge hot">热销</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">运动追踪</span>
+                                <span class="product-tag">情感陪伴</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-purple-400 transition-colors">太一智能手环Pro</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">全天候情感状态监测，智能运动指导，压力管理提醒，让AI成为您的贴心健康管家。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-running mr-1"></i>
+                                    <span>运动模式</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-tint mr-1"></i>
+                                    <span>防水50米</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-purple-400">¥1,599</span>
+                                    <span class="text-gray-500 line-through text-sm ml-1">¥1,999</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-purple-500 to-pink-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 智能手表 -->
+                    <div class="product-card fade-in delay-200 cursor-pointer" data-product-id="watch-001" data-category="wearable professional">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能手表X1" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge premium">旗舰版</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">全功能</span>
+                                <span class="product-tag">AI助手</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors">太一智能手表X1</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">旗舰级情感计算芯片，语音AI助手，全面健康监测，智能场景识别，您的专属AI伙伴。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-microphone mr-1"></i>
+                                    <span>语音助手</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-wifi mr-1"></i>
+                                    <span>独立通话</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-green-400">¥4,999</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-green-500 to-teal-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 智能耳机 -->
+                    <div class="product-card fade-in delay-300 cursor-pointer" data-product-id="earphone-001" data-category="entertainment wearable">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能耳机S3" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge limited">限量版</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">情感音乐</span>
+                                <span class="product-tag">降噪通话</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-yellow-400 transition-colors">太一智能耳机S3</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">AI情感音频技术，根据心情推荐音乐，智能降噪，情感语音交互，音乐也能懂你的心。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-music mr-1"></i>
+                                    <span>情感音乐</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-volume-mute mr-1"></i>
+                                    <span>主动降噪</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-yellow-400">¥1,299</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-yellow-500 to-orange-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 更多智能硬件商品 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12" id="moreProducts">
+                    <!-- 智能项链 -->
+                    <div class="product-card fade-in cursor-pointer" data-product-id="necklace-001" data-category="fashion wearable">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能项链" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge elegant">优雅款</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">时尚科技</span>
+                                <span class="product-tag">情感珠宝</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-pink-400 transition-colors">太一智能项链</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">隐藏式传感器设计，时尚与科技完美融合，通过微振动传递情感信息，让爱更有温度。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-gem mr-1"></i>
+                                    <span>时尚设计</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>情感共鸣</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-pink-400">¥3,599</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-pink-500 to-rose-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 智能眼镜 -->
+                    <div class="product-card fade-in delay-100 cursor-pointer" data-product-id="glasses-001" data-category="professional entertainment">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能眼镜AR" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge future">未来科技</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">AR显示</span>
+                                <span class="product-tag">眼动追踪</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-indigo-400 transition-colors">太一智能眼镜AR</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">增强现实显示，眼动追踪技术，情感状态可视化，将数字世界与情感世界无缝连接。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-eye mr-1"></i>
+                                    <span>AR显示</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-camera mr-1"></i>
+                                    <span>智能拍摄</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-indigo-400">¥8,999</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-indigo-500 to-purple-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 智能手套 -->
+                    <div class="product-card fade-in delay-200 cursor-pointer" data-product-id="glove-001" data-category="professional entertainment">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" 
+                                 alt="太一智能手套VR" 
+                                 class="w-full h-48 object-cover"
+                                 loading="lazy">
+                            <div class="product-overlay">
+                                <div class="product-badge pro">专业版</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-tags">
+                                <span class="product-tag">触觉反馈</span>
+                                <span class="product-tag">手势识别</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors">太一智能手套VR</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">精密手势识别，触觉反馈技术，让您在虚拟世界中也能感受真实的情感触碰体验。</p>
+                            <div class="product-features mb-4">
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-hand-paper mr-1"></i>
+                                    <span>手势控制</span>
+                                </div>
+                                <div class="feature-badge text-xs">
+                                    <i class="fas fa-cube mr-1"></i>
+                                    <span>VR交互</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="product-price">
+                                    <span class="text-2xl font-bold text-cyan-400">¥5,999</span>
+                                </div>
+                                <button class="product-btn bg-gradient-to-r from-cyan-500 to-blue-600 text-sm px-4 py-2">
+                                    <span>查看详情</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 查看更多按钮 -->
+                <div class="text-center mt-16 fade-in">
+                    <button id="viewAllProducts" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                        <span class="mr-3">查看全部商品</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <p class="text-gray-400 mt-4 text-sm">更多智能硬件产品等您发现</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-20 bg-gradient-to-b from-gray-900 to-black border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                        <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            太一科技
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-8 leading-relaxed max-w-md">
+                        致力于通过技术创新让AI从"高性能的工具"升级为"有情感的伙伴"，构建更有温度的智能世界。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-weibo"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#about" class="footer-link">关于我们</a></li>
+                        <li><a href="products.html" class="footer-link">产品服务</a></li>
+                        <li><a href="solutions.html" class="footer-link">解决方案</a></li>
+                        <li><a href="hardware.html" class="footer-link">智能硬件</a></li>
+                        <li><a href="contact.html" class="footer-link">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-white">联系方式</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i>
+                            上海市普陀区
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-blue-400"></i>
+                            021-6688-8888
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-blue-400"></i>
+                            contact@taiyi-tech.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">
+                    © 2025 上海太一智枢科技发展有限公司. All rights reserved.
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">隐私政策</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">服务条款</a>
+                    <span class="mx-4">|</span>
+                    <a href="#" class="footer-link">法律声明</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自定义脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

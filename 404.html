@@ -50,15 +50,25 @@
         .home-button:hover {
             opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 <body>
     <div class="error-container">
         <div class="error-code">404</div>
-        <div class="error-message">抱歉，您访问的页面不存在</div>
+        <h1 class="error-message">页面未找到</h1>
+        <p class="mb-8">您访问的页面不存在或已被移除</p>
         <a href="/" class="home-button">返回首页</a>
     </div>
+
+    <script>
+        // 记录404错误
+        console.error('404 错误: ' + window.location.pathname);
+        
+        // 5秒后自动跳转到首页
+        setTimeout(function() {
+            window.location.href = '/';
+        }, 5000);
+    </script>
 </body>
 </html>
